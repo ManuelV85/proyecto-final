@@ -8,28 +8,76 @@ from random import randint
 
 api = Blueprint('api', __name__)
 
+class structure:
+    def __init__(self, nickname):
 
-class users_structure:
-    def __init__(self, surname):
-        self.surname = surname
+        self._user_ws = [{
 
-        self.users = [{
             "name/WS_name": "Gokubike",
             "last_name": "",
             "e-mail": "vegita@vegetables.com",
             "password": "gar4gasd2",
             "addres": "somewhere",
-            "id": self.generate_id()
-        }
+            "id": self._generate_id()
+        },
         {
             "name/WS_name": "Vegetta",
             "last_name": "Sayajin",
             "e-mail": "vegita@vegetables.com",
             "password": "gar4gasd2",
             "addres": "somewhere",
-            "id": self.generate_id()
-
+            "id": self._generate_id()
         }]
 
-        def _generate_id():
-            return randint ( 0,9999999999)
+    
+
+#Random ID
+def _generate_id(self):
+    return randint(0, 99999999)
+
+#API SING IN  "POST"
+@api.route('/users', methods = ["POST"])
+def add_user():
+    request_body = request.json
+    user_ws.append(request_body)
+    print("test")
+    return jsonify(user_ws)
+
+#API LOGIN "GET"
+@api.route('/user/<int:id>', methods = ["GET"])
+def login_user(user_id):
+    print("test id")
+
+    for user in user_ws:
+        if user["ID"] == user_id:
+            return jsonify(user), 200
+    else:
+        return "no esta registrado", 400
+        
+#API FORGOT PW "GET"abs
+@api.route('/user/password/<int:id>', methods = ["GET"])
+def login_user(user_id):
+    
+    for user in user_ws:
+        if user["ID"] == user_id:
+            return jsonify(user), 200
+    else:
+        return "no esta registrado", 400
+
+#API INVENTORY  "POST"
+@api.route('/users/upload', methods = ["POST"])
+def add_item():
+    request_body = request.json
+    user_ws.append(request_body)
+    print("test")
+    return jsonify(user_ws)
+
+#API CATEGORY/ITEM "GET"abs
+@api.route('/user/category/<int:id>', methods = ["GET"])
+def login_user(user_id):
+    
+    for user in user_ws:
+        if user["ID"] == user_id:
+            return jsonify(user), 200
+    else:
+        return "no esta registrado", 400
