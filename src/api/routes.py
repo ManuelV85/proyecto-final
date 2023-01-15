@@ -74,10 +74,32 @@ def add_item():
 
 #API CATEGORY/ITEM "GET"abs
 @api.route('/user/category/<int:id>', methods = ["GET"])
-def login_user(user_id):
+def category_user(user_id):
     
     for user in user_ws:
         if user["ID"] == user_id:
             return jsonify(user), 200
     else:
         return "no esta registrado", 400
+
+#API reset password
+@api.route('user/reset', methods = ["PUT"])
+def reset_user(user_id):
+    info = request.json
+    for user in user_ws:
+        if user["ID"] == user_id:
+            user_ws = info
+            return jsonify(user)
+        else:
+            return "no existe el usuario", 400
+
+#API inventory 
+@api.route('user/inventory', methods = ["PUT"])
+def reset_user(user_id):
+    info = request.json
+    for user in user_ws:
+        if user["ID"] == user_id:
+            user_ws = info
+            return jsonify(user)
+        else:
+            return "no existe el usuario", 400
