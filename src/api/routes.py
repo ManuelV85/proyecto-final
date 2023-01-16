@@ -8,17 +8,14 @@ from random import randint
 
 api = Blueprint('api', __name__)
 
-class structure:
-    def __init__(self, nickname):
-
-        self._user_ws = [{
+_users = [{
 
             "name/WS_name": "Gokubike",
             "last_name": "",
             "e-mail": "vegita@vegetables.com",
             "password": "gar4gasd2",
             "addres": "somewhere",
-            "id": self._generate_id()
+            "id": 1010
         },
         {
             "name/WS_name": "Vegetta",
@@ -26,80 +23,27 @@ class structure:
             "e-mail": "vegita@vegetables.com",
             "password": "gar4gasd2",
             "addres": "somewhere",
-            "id": self._generate_id()
+            "id": 2020
         }]
 
     
+#def generate_id():
+ #   return randint(0, 99999999)
 
-#Random ID
-def _generate_id(self):
-    return randint(0, 99999999)
 
-#API SING IN  "POST"
-@api.route('/users', methods = ["POST"])
-def add_user():
-    request_body = request.json
-    user_ws.append(request_body)
-    print("test")
-    return jsonify(user_ws)
+#API user GET
+@api.route('users', methods = ['GET'])
+def all_users():
 
-#API LOGIN "GET"
-@api.route('/user/<int:id>', methods = ["GET"])
-def login_user(user_id):
-    print("test id")
+    return jsonify(_users)
 
-    for user in user_ws:
-        if user["ID"] == user_id:
+#API GET login 
+@api.route('/login/user/<int:id>', methods = ['GET'])
+def login_user(id):
+    for  user in (_users):
+        if user["id"] == id:
             return jsonify(user), 200
-    else:
-        return "no esta registrado", 400
         
-#API FORGOT PW "GET"abs
-@api.route('/user/password/<int:id>', methods = ["GET"])
-def login_user(user_id):
-    
-    for user in user_ws:
-        if user["ID"] == user_id:
-            return jsonify(user), 200
-    else:
-        return "no esta registrado", 400
+    return "USUARIO NO EXISTE", 400
 
-#API INVENTORY  "POST"
-@api.route('/users/upload', methods = ["POST"])
-def add_item():
-    request_body = request.json
-    user_ws.append(request_body)
-    print("test")
-    return jsonify(user_ws)
 
-#API CATEGORY/ITEM "GET"abs
-@api.route('/user/category/<int:id>', methods = ["GET"])
-def category_user(user_id):
-    
-    for user in user_ws:
-        if user["ID"] == user_id:
-            return jsonify(user), 200
-    else:
-        return "no esta registrado", 400
-
-#API reset password
-@api.route('user/reset', methods = ["PUT"])
-def reset_user(user_id):
-    info = request.json
-    for user in user_ws:
-        if user["ID"] == user_id:
-            user_ws = info
-            return jsonify(user)
-        else:
-            return "no existe el usuario", 400
-
-#API inventory 
-@api.route('user/inventory', methods = ["PUT"])
-def reset_user(user_id):
-    info = request.json
-    for user in user_ws:
-        if user["ID"] == user_id:
-            user_ws = info
-            return jsonify(user)
-        else:
-            return "no existe el usuario", 400
