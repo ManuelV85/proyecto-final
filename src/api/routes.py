@@ -21,7 +21,7 @@ _users = [{
             "name/WS_name": "Vegetta",
             "last_name": "Sayajin",
             "e-mail": "vegita@vegetables.com",
-            "password": "gar4gasd2",
+            "password": "ffaaffaa",
             "addres": "somewhere",
             "id": 2020
         }]
@@ -46,4 +46,18 @@ def login_user(id):
         
     return "USUARIO NO EXISTE", 400
 
+   
+#API GET forgot password
+@api.route('/password/user/<int:id>', methods = ['GET'])
+def password_user(id):
+    for  user in (_users):
+        if user["id"] == id:
+            return jsonify(user), 200
+    return "USUARIO NO EXISTE", 400
 
+#API POST Sing in 
+@api.route('/singin/users', methods = ['POST'])
+def add_user():
+    request_body = request.json 
+    _users.append(request_body)
+    return "Done", 200
