@@ -9,33 +9,31 @@ export const Biker = () => {
       <div className="mb-3">
         <Logo />
       </div>
-     
-      
-          <button
-            onClick={() => navigate("/userstore")}
-            type="submit"
-            className="btn btn-dark"
-          >
-            Ws_Store
-          </button>
-        <div className="mb-3">
-          <button
-            onClick={() => alert("proximamente")}
-            type="submit"
-            className="btn btn-dark"
-          >
-            Travel
-          </button>
 
-          <button
-            onClick={() => alert("proximamente")}
-            type="submit"
-            className="btn btn-danger"
-          >
-            S.O.S
-          </button>
-        </div>
-     
+      <button
+        onClick={() => navigate("/userstore")}
+        type="submit"
+        className="btn btn-dark"
+      >
+        Visitar Tienda
+      </button>
+      <div className="mb-3">
+        <button
+          onClick={() => alert("proximamente")}
+          type="submit"
+          className="btn btn-dark"
+        >
+          Viaje
+        </button>
+
+        <button
+          onClick={() => alert("proximamente")}
+          type="submit"
+          className="btn btn-danger"
+        >
+          S.O.S
+        </button>
+      </div>
     </form>
   );
 };
