@@ -19,15 +19,15 @@ export const MenuStore = () => {
           type="submit"
           className="btn btn-dark"
         >
-          Upload-Item
+          Cargar Producto
         </button>
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/tableinventary")}
           type="submit"
           className="btn btn-dark"
         >
-          Inventory
+          Inventario
         </button>
 
         <button
@@ -36,7 +36,7 @@ export const MenuStore = () => {
           className="btn btn-dark"
         >
           {" "}
-          Address/opening hours
+          Direccion/horario de atencion
         </button>
       </div>
     </form>

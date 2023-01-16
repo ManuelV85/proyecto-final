@@ -21,6 +21,17 @@ export const Upload_item = () => {
           aria-describedby="emailHelp"
           placeholder="ingrese nombre producto"
         />
+
+        <label for="exampleInputEmail1" className="form-label">
+          Precio Unitario{" "}
+        </label>
+        <input
+          type="email"
+          className="form-control"
+          id="exampleInputEmail1"
+          aria-describedby="emailHelp"
+          placeholder="ingrese nombre producto"
+        />
         <label for="exampleInputEmail1" className="form-label">
           Cantidad de productos{" "}
         </label>
@@ -38,7 +49,7 @@ export const Upload_item = () => {
           <textarea
             class="form-control"
             id="exampleFormControlTextarea1"
-            rows="3"
+            rows="2"
           ></textarea>
         </div>
         <div className="cargar-imagen">

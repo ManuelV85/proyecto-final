@@ -27,14 +27,14 @@ export const Home = () => {
         type="submit"
         className="btn btn-dark"
       >
-        Login
+        Entrar
       </button>
       <button
         onClick={() => navigate("/registration")}
         type="submit"
         className="btn btn-dark"
       >
-        Registration
+        Registrarse
       </button>
     </form>
   );

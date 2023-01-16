@@ -1,10 +1,8 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
 
 import { Home } from "./pages/home";
-import { Demo } from "./pages/demo";
-import { Single } from "./pages/single";
+
 import injectContext from "./store/appContext";
 
 import { Footer } from "./component/footer";
@@ -12,9 +10,12 @@ import { Login } from "./pages/Login";
 import { Registration } from "./pages/Registration";
 import { Biker } from "./pages/inicio_biker";
 import { UserStore } from "./pages/userState";
-import { Menu_Store } from "./pages/inicio_Store.js";
+
 import { MenuStore } from "./pages/inicio_Store.js";
 import { Upload_item } from "./pages/Upload";
+import Listadetareas from "./pages/listatareas";
+import { Tableinventary } from "./pages/tablaInventary";
+import { Emailpassword } from "./pages/email.password";
 
 //create your first component
 const Layout = () => {
@@ -25,18 +26,17 @@ const Layout = () => {
   return (
     <div className="app">
       <BrowserRouter basename={basename}>
-        <ScrollToTop>
-          <Routes>
-            <Route element={<Home />} path="/" />
-            <Route element={<Login />} path="/login" />
-            <Route element={<Registration />} path="/registration" />
-            <Route element={<Biker />} path="/biker" />
-            <Route element={<UserStore />} path="/userstore" />
-            <Route element={<MenuStore />} path="/menustore" />
-            <Route element={<Upload_item />} path="/upload_item" />
-          </Routes>
-          <Footer />
-        </ScrollToTop>
+        <Routes>
+          <Route element={<Home />} path="/" />
+          <Route element={<Login />} path="/login" />
+          <Route element={<Registration />} path="/registration" />
+          <Route element={<Biker />} path="/biker" />
+          <Route element={<UserStore />} path="/userstore" />
+          <Route element={<MenuStore />} path="/menustore" />
+          <Route element={<Upload_item />} path="/upload_item" />
+          <Route element={<Tableinventary />} path="/tableinventary" />
+          <Route element={<Emailpassword />} path="/emailpassword" />
+        </Routes>
       </BrowserRouter>
     </div>
   );
