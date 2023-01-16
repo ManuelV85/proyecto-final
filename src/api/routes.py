@@ -26,6 +26,16 @@ _users = [{
             "id": 2020
         }]
 
+_inventory = [{
+                "categoria": "cadenas",
+                "marca": "algo"
+
+            },
+            {
+                "cuerpo": "manubrio",
+                "marca": "algossss"
+            }
+]
     
 #def generate_id():
  #   return randint(0, 99999999)
@@ -60,4 +70,11 @@ def password_user(id):
 def add_user():
     request_body = request.json 
     _users.append(request_body)
-    return "Done", 200
+    return jsonify(_users), 200
+
+#API INVENTORY POST
+@api.route('/inventory/users', methods = ['POST'])
+def inventory_user():
+    request_body = request.json 
+    _inventory.append(request_body)
+    return jsonify(_inventory), 200
