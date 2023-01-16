@@ -24,7 +24,7 @@ export const TareasFormulario = (props) => {
       <input
         className="tarea-input"
         type="text"
-        placeholder="Nombre Producto/ cantidad"
+        placeholder="Nombre Producto"
         name="texto"
         onChange={manejarcambio}
       />
