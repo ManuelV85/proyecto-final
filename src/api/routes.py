@@ -20,7 +20,7 @@ class users_structure:
             "password": "gar4gasd2",
             "addres": "somewhere",
             "id": self.generate_id()
-        }
+        },
         {
             "name/WS_name": "Vegetta",
             "last_name": "Sayajin",

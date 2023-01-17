@@ -1,6 +1,7 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
+
 body {
   display: flex;
   align-items: center;
@@ -10,3 +11,5 @@ body {
   background-position: center center;
   background-attachment: fixed;
 }
+
+
