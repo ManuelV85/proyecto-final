@@ -6,7 +6,7 @@ export const sendEmail = (params) => {
   const key = process.env.KEY;
 
   const templateParams = {
-    from_name: "APP NAME",
+    from_name: "TuCleta",
     to_email: params.to_email,
     to_name: params.to_name,
     to_link: params.to_link
