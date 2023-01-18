@@ -40,14 +40,18 @@ _inventory = [{
 #def generate_id():
  #   return randint(0, 99999999)
 
+#welcome to our job
+@api.route('/')
+def root():
+    return jsonify("BIenvenidos a nuestro trabajo")
 
 #API user GET
-@api.route('users', methods = ['GET'])
+@api.route('/users', methods = ['GET'])
 def all_users():
 
     return jsonify(_users)
 
-#API GET login 
+#API GET user 
 @api.route('/login/user/<int:id>', methods = ['GET'])
 def login_user(id):
     for  user in (_users):
