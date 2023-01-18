@@ -1,7 +1,8 @@
 /* 
     General Styles used on every website (Don't Repeat Yourself)
 */
-body {
+
+body{
   display: flex;
   align-items: center;
   justify-content: center;
@@ -9,4 +10,16 @@ body {
   background-size: cover;
   background-position: center center;
   background-attachment: fixed;
+  background-repeat : no-repeat;
 }
+
+@media only screen and (max-width: 767px) {
+
+  body {
+  
+  background-image: url(https://cdn.pixabay.com/photo/2016/09/28/18/06/frog-1701078_960_720.jpg);
+  
+  }
+
+}
+

@@ -25,19 +25,21 @@ const Layout = () => {
 
   return (
     <div className="app">
-      <BrowserRouter basename={basename}>
-        <Routes>
-          <Route element={<Home />} path="/" />
-          <Route element={<Login />} path="/login" />
-          <Route element={<Registration />} path="/registration" />
-          <Route element={<Biker />} path="/biker" />
-          <Route element={<UserStore />} path="/userstore" />
-          <Route element={<MenuStore />} path="/menustore" />
-          <Route element={<Upload_item />} path="/upload_item" />
-          <Route element={<Tableinventary />} path="/tableinventary" />
-          <Route element={<Emailpassword />} path="/emailpassword" />
-        </Routes>
-      </BrowserRouter>
+      <div ClassName="container">
+        <BrowserRouter basename={basename}>
+          <Routes>
+            <Route element={<Home />} path="/" />
+            <Route element={<Login />} path="/login" />
+            <Route element={<Registration />} path="/registration" />
+            <Route element={<Biker />} path="/biker" />
+            <Route element={<UserStore />} path="/userstore" />
+            <Route element={<MenuStore />} path="/menustore" />
+            <Route element={<Upload_item />} path="/upload_item" />
+            <Route element={<Tableinventary />} path="/tableinventary" />
+            <Route element={<Emailpassword />} path="/emailpassword" />
+          </Routes>
+        </BrowserRouter>
+      </div>
     </div>
   );
 };
