@@ -43,13 +43,15 @@ _inventory = [{
 #welcome to our job
 @api.route('/')
 def root():
-    return jsonify("BIenvenidos a nuestro trabajo")
+    return jsonify("Bienvenidos a nuestro trabajo")
 
 #API user GET
 @api.route('/users', methods = ['GET'])
 def all_users():
+    users_db = User.query.all()
+    users_db = list(map(lambda user:user.serialize(), users_db))
 
-    return jsonify(_users)
+    return jsonify(users_db), 200
 
 #API GET user 
 @api.route('/login/user/<int:id>', methods = ['GET'])
@@ -69,9 +71,11 @@ def password_user(id):
             return jsonify(user), 200
     return "USUARIO NO EXISTE", 400
 
-#API POST Sing in 
+#API POST Sing in <---
 @api.route('/singin/users', methods = ['POST'])
 def add_user():
+    user = User.query.all()
+    user = list(map(lambda p:p.serialize(), User))
     request_body = request.json 
     _users.append(request_body)
     return jsonify(_users), 200

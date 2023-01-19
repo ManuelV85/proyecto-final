@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
-
+"""
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -29,6 +29,17 @@ class User(db.Model):
     address = db.Column(db.String(250), nullable=False)
     type = db.Column(db.String(250), nullable=False)
 
+    def serialize (self):
+        return{
+            "id": self.id,
+            "name": self.name,
+            "last_name": self.last_name,
+            "email": self.email,
+            "addres": self.address,
+            "type": self.type
+        }
+
+"""
 #API inventory "POST"
 class Inventory(db.Model):
     __tablename__ = 'inventory'
