@@ -21,11 +21,11 @@ def setup_commands(app):
         for x in range(1, int(count) + 1):
             user = User()
             user.id = x
-            user.email = "test_user" + str(x) + "@test.com"
-            user.name = "manuel" + str(x)
-            user.last_name = "villate" + str(x) 
+            user.email = "test_user" + " " + str(x) + "@test.com"
+            user.name = "manuel" + " " + str(x)
+            user.last_name = "villate" + " " +  str(x) 
             user.password = "123456"
-            user.address = "algun lugar" + str(x)
+            user.address = "algun lugar" + " " +  str(x)
             user.is_active = True
             user.type = "biker" 
             db.session.add(user)
