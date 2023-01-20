@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Inventory
 from api.utils import generate_sitemap, APIException
 from random import randint
 
@@ -83,6 +83,16 @@ def add_user():
 #API INVENTORY POST
 @api.route('/inventory/users', methods = ['POST'])
 def inventory_user():
-    request_body = request.json 
+    inventory1 = Invetory.query.all()
+    inventory1 = list(map(lambda inventory1:inventory1.serialize(), inventory_db))
+  #  request_body = request.json 
     _inventory.append(request_body)
     return jsonify(_inventory), 200
+
+#API inventory GET
+@api.route('/inventory', methods = ['GET'])
+def all_inventory():
+    inventory_db = Inventory.query.all()
+    inventory_db = list(map(lambda inventory_db:inventory_db.serialize(), inventory_db))
+
+    return jsonify(inventory_db), 200

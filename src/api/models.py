@@ -39,30 +39,41 @@ class User(db.Model):
             "type": self.type
         }
 
-"""
+
 #API inventory "POST"
 class Inventory(db.Model):
     __tablename__ = 'inventory'
-    id = db.Column(db.Integer, primary_key=True)
+    id_item = db.Column(db.Integer, primary_key=True)
     category = db.Column(db.String(250), nullable=False)
     product = db.Column(db.String(250), nullable=False)
     picture = db.Column(db.String(250), nullable=False)
-    product = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(250), nullable=False)
-    price = db.Column(db.float(250), nullable=False)
-    user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
-    user = relationship(User)
-    """
+    price = db.Column(db.String(250), nullable=False)
+   # user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
+   # user = relationship(User)
+
+    def serialize (self):
+        return{
+            "id_item": self.id_item,
+            "catogory": self.category,
+            "product": self.product,
+            "picture": self.picture,
+            "description": self.description,
+            "price": self.price
+        }
+    
    
-"""
-class Scheduling(Base):
+
+class Scheduling(db.Model):
     __tablename__ = 'scheduling'
-    id = Column(Integer, primary_key=True)
-    start_hour = Column(String(250), nullable=False)
-    end_hour = Column(String(250), nullable=False)
-    day = Column(String(250), nullable=False)
-    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    user = relationship(User)
+    id_scheduling = db.Column(db.Integer, primary_key=True)
+    start_hour = db.Column(db.String(250), nullable=False)
+    end_hour = db.Column(db.String(250), nullable=False)
+    day = db.Column(db.String(250), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    #user = relationship(User)
+
+""" 
    
 class Order(Base):
     __tablename__ = 'order'
