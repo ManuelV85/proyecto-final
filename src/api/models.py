@@ -48,7 +48,7 @@ class Inventory(db.Model):
     product = db.Column(db.String(250), nullable=False)
     picture = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(250), nullable=False)
-    price = db.Column(db.Float(64), nullable=False)
+    price = db.Column(db.Integer, nullable=False)
     #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     #user = db.relationship(User)
 
@@ -82,18 +82,25 @@ class Scheduling(db.Model):
 
 
         }
-""" 
+
    
-class Order(Base):
+class Order(db.Model):
     __tablename__ = 'order'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    user = relationship(User)
-    total_price = Column(float(250), nullable=False)
-    status = Column(String(250), nullable=False)
-    paymentmethod_id = Column(Integer, ForeignKey('paymentmethod.id'), nullable=False)
+    id_order = db.Column(db.Integer, primary_key=True)
+    total_price = db.Column(db.Integer, nullable=False)
+    status_commit = db.Column(db.String(250), nullable=False)
+    #user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
+    #user = relationship(User)
+    
+    def serialize(self):
+        return{
+            "id_order": self.id_order,
+            "total_price": self.total_price,
+            "status_commit": self.status_commit
 
+        }
 
+"""
 class OrderItem(Base):
     __tablename__ = 'orderitem'
     id = Column(Integer, primary_key=True)
@@ -101,25 +108,5 @@ class OrderItem(Base):
     order = relationship(Order)
     inventory_id = Column(Integer, ForeignKey('inventory.id'), nullable=False)
     inventory = relationship(Inventory)
-  
- 
-class Shoppingcar(Base):
-    __tablename__ = 'shoppingcar'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    user = relationship(User)
-    status = Column(String(250), nullable=False)
-    inventory_id = Column(Integer, ForeignKey('inventory.id'), nullable=False)
-    inventory = relationship(Inventory)
-
-
-class PaymentMethod(Base):
-    __tablename__ = 'paymentmethod'
-    id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    user = relationship(User)
-    payment_type = Column(String(250), nullable=False)
-    transaction = Column(String(250), nullable=False)
-    amount_transaction = Column(float(250), nullable=False)
 
 """

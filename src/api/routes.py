@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Inventory, Scheduling
+from api.models import db, User, Inventory, Scheduling, Order
 from api.utils import generate_sitemap, APIException
 from random import randint
 
@@ -104,3 +104,11 @@ def all_scheduling():
     scheduling_db = list(map(lambda scheduling_db: scheduling_db.serialize(), scheduling_db))
 
     return jsonify(scheduling_db), 200
+
+#API order GET testing
+@api.route('/order', methods = ['GET'])
+def all_order():
+    order_db = Order.query.all()
+    order_db = list(map(lambda order_db: order_db.serialize(), order_db))
+
+    return jsonify(order_db), 200    
