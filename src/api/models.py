@@ -48,9 +48,9 @@ class Inventory(db.Model):
     product = db.Column(db.String(250), nullable=False)
     picture = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(250), nullable=False)
-    price = db.Column(db.String(250), nullable=False)
-   # user_id = db.Column(db.Integer, ForeignKey('user.id'), nullable=False)
-   # user = relationship(User)
+    price = db.Column(db.Float(64), nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    #user = db.relationship(User)
 
     def serialize (self):
         return{
@@ -62,7 +62,7 @@ class Inventory(db.Model):
             "price": self.price
         }
     
-   
+
 
 class Scheduling(db.Model):
     __tablename__ = 'scheduling'
@@ -70,9 +70,18 @@ class Scheduling(db.Model):
     start_hour = db.Column(db.String(250), nullable=False)
     end_hour = db.Column(db.String(250), nullable=False)
     day = db.Column(db.String(250), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     #user = relationship(User)
 
+    def serialize(self):
+        return{
+            "id_scheduling": self.id_scheduling,
+            "start_hour": self.start_hour,
+            "end_hour": self.end_hour,
+            "day": self.day,
+
+
+        }
 """ 
    
 class Order(Base):

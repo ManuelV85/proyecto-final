@@ -1,6 +1,6 @@
 
 import click
-from api.models import db, User, Inventory
+from api.models import db, User, Inventory, Scheduling
 
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
@@ -49,8 +49,21 @@ def setup_commands(app):
             inventory.product = "test product" + " " + str(i)
             inventory.description = "test description" + " " + str(i)
             inventory.picture = "test picture" + " " + str(i)
-            inventory.price = str(i)
+            inventory.price = i
             db.session.add(inventory)
             db.session.commit()
         print(" all test inventory created")
 
+    @app.cli.command("insert-test-scheduling")
+    @click.argument("count")
+    def insert_test_scheduling(count):
+        print("creating test scheduling")
+        for j in range(1, int(count) + 1):
+            scheduling = Scheduling()
+            scheduling.id_scheduling = j
+            scheduling.start_hour = "8:00 hrs" + " " + str(j)
+            scheduling.end_hour = "18:00 hrs" + " " + str(j)
+            scheduling.day = "Lunes a Viernes" + " " + str(j)
+            db.session.add(scheduling)
+            db.session.commit()  
+        print(" testing scheduling")         
