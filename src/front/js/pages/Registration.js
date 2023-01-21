@@ -25,19 +25,19 @@ export const Registration = () => {
           type="button"
           className="btn btn-dark"
         >
-          workshop
+          Tienda
         </button>
         <button
           onClick={() => setMostrarComponente(false)}
           type="button"
           className="btn btn-dark"
         >
-          biker
+          Ciclista
         </button>
       </div>
       <div className="mb-3">
         <label for="exampleInputEmail1" className="form-label">
-          Name
+          Nombre
         </label>
         <input
           type="email"
@@ -47,7 +47,7 @@ export const Registration = () => {
         />
 
         <label for="exampleInputEmail1" className="form-label">
-          Last-Name
+          Apellido
         </label>
         <input
           type="email"
@@ -79,7 +79,7 @@ export const Registration = () => {
           {errors.email && <span>{errors.email.message}</span>}
         </div>
         <label for="exampleInputEmail1" className="form-label">
-          Pasword
+          Contraseña
         </label>
         <input
           type="email"
@@ -102,7 +102,7 @@ export const Registration = () => {
         </div>
 
         <label for="exampleInputEmail1" className="form-label">
-          Repeat Password
+          Repita contraseña
         </label>
         <input
           type="email"
@@ -112,7 +112,7 @@ export const Registration = () => {
         />
 
         <label for="exampleInputEmail1" className="form-label">
-          Addressn
+          Direccion
         </label>
         <input
           type="email"
@@ -142,7 +142,7 @@ export const Registration = () => {
         type="submit"
         className="btn btn-dark"
       >
-        Create Acount
+        Crear cuenta
       </button>
     </form>
   );

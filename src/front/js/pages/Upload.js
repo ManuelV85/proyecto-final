@@ -64,14 +64,14 @@ export const Upload_item = () => {
           type="submit"
           className="btn btn-dark"
         >
-          CARGAR IMAGEN
+          Cargar Imagen
         </button>
         <button
           onClick={() => alert("proximamente")}
           type="submit"
           className="btn btn-dark"
         >
-          Save
+          Guardar
         </button>
       </div>
     </form>
