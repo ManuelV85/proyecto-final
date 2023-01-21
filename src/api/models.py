@@ -57,7 +57,7 @@ class Inventory(db.Model):
     id_item = db.Column(db.Integer, primary_key=True)
     category = db.Column(db.String(250), nullable=False)
     product = db.Column(db.String(250), nullable=False)
-    picture = db.Column(db.String(250), nullable=False)
+    picture = db.Column(db.BLOB, nullable=False)
     description = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
