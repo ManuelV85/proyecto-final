@@ -5,6 +5,10 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, Inventory, Scheduling, Order
 from api.utils import generate_sitemap, APIException
 from random import randint
+import uuid
+from  werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, jwt_required
+
 
 api = Blueprint('api', __name__)
     
@@ -15,6 +19,23 @@ api = Blueprint('api', __name__)
 @api.route('/')
 def root():
     return jsonify("Bienvenidos a nuestro trabajo")
+
+
+@api.route('/signin', methods = ['POST'])
+def signin():
+    data = request.from
+
+
+
+
+
+
+
+
+
+
+
+    """
 
 #API user GET
 @api.route('/users', methods = ['GET'])
@@ -60,7 +81,7 @@ def inventory_user():
 
 
 
-"""    
+  
 
    #API GET user by id
 @api.route('/login/user/<int:id>', methods = ['GET'])
@@ -83,7 +104,7 @@ def password_user(id):
 
 
 
-"""
+
 #API inventory GET testing <----
 @api.route('/inventory', methods = ['GET'])
 def all_inventory():
@@ -91,7 +112,7 @@ def all_inventory():
     inventory_db = list(map(lambda inventory_db:inventory_db.serialize(), inventory_db))
 
     return jsonify(inventory_db), 200
-"""
+
 #API scheduling GET testing <----
 @api.route('/scheduling', methods = ['GET'])
 def all_scheduling():
