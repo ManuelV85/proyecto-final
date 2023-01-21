@@ -21,15 +21,13 @@ def setup_commands(app):
     def insert_test_data(count):
         print("Creating test users")
         for x in range(1, int(count) + 1):
-            user = User()
-            user.id = x
-            user.email = "test_user" + " " + str(x) + "@test.com"
-            user.name = "manuel" + " " + str(x)
-            user.last_name = "villate" + " " +  str(x) 
-            user.password = "123456"
-            user.address = "algun lugar" + " " +  str(x)
-            user.is_active = True
-            user.type = "biker" 
+            user = User( "manuel" + " " + str(x),\
+                 "villate" + " " +  str(x),\
+                "test_user" + " " + str(x) + "@test.com",\
+                "algun lugar",\
+                 "123456",\
+                 "biker"  )
+           
             db.session.add(user)
             db.session.commit()
             print("User: ", user.email, " created.")
@@ -50,6 +48,7 @@ def setup_commands(app):
             inventory.description = "test description" + " " + str(i)
             inventory.picture = "test picture" + " " + str(i)
             inventory.price = i
+            inventory.user_id = 1
             db.session.add(inventory)
             db.session.commit()
         print(" all test inventory created")

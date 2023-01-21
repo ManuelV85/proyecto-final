@@ -1,4 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
+from flask import jsonify
 
 
 db = SQLAlchemy()
@@ -69,8 +70,9 @@ class Inventory(db.Model):
             "product": self.product,
             "picture": self.picture,
             "description": self.description,
-            "price": self.price
-        }
+            "price": self.price,
+            "user": self.user.name
+            }
     
 
 

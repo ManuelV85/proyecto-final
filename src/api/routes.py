@@ -78,7 +78,7 @@ def inventory_user():
   #  request_body = request.json 
     _inventory.append(request_body)
     return jsonify(_inventory), 200
-
+"""
 #API inventory GET testing <----
 @api.route('/inventory', methods = ['GET'])
 def all_inventory():
@@ -86,7 +86,7 @@ def all_inventory():
     inventory_db = list(map(lambda inventory_db:inventory_db.serialize(), inventory_db))
 
     return jsonify(inventory_db), 200
-
+"""
 #API scheduling GET testing <----
 @api.route('/scheduling', methods = ['GET'])
 def all_scheduling():
