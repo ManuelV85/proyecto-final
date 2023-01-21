@@ -7,35 +7,6 @@ from api.utils import generate_sitemap, APIException
 from random import randint
 
 api = Blueprint('api', __name__)
-#eliminar 
-_users = [{
-
-            "name/WS_name": "Gokubike",
-            "last_name": "",
-            "e-mail": "vegita@vegetables.com",
-            "password": "gar4gasd2",
-            "addres": "somewhere",
-            "id": 1010
-        },
-        {
-            "name/WS_name": "Vegetta",
-            "last_name": "Sayajin",
-            "e-mail": "vegita@vegetables.com",
-            "password": "ffaaffaa",
-            "addres": "somewhere",
-            "id": 2020
-        }]
-
-_inventory = [{
-                "categoria": "cadenas",
-                "marca": "algo"
-
-            },
-            {
-                "cuerpo": "manubrio",
-                "marca": "algossss"
-            }
-]
     
 #def generate_id():
  #   return randint(0, 99999999)
@@ -73,7 +44,11 @@ def add_user():
 
 
 
-    
+
+
+
+
+"""    
 
    #API GET user by id
 @api.route('/login/user/<int:id>', methods = ['GET'])
@@ -127,3 +102,4 @@ def all_order():
     order_db = list(map(lambda order_db: order_db.serialize(), order_db))
 
     return jsonify(order_db), 200    
+    """

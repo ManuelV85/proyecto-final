@@ -59,8 +59,8 @@ class Inventory(db.Model):
     picture = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    #user = db.relationship(User)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship(User)
 
     def serialize (self):
         return{
