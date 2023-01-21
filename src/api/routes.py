@@ -41,8 +41,20 @@ def add_user():
     db.session.commit()
     return "Done", 200
 
-
-
+#API INVENTORY POST
+@api.route('/inventory/users', methods = ['POST'])
+def inventory_user():
+    request_body = request.json
+    print(request_body["user_id"])
+    user = User.query.get(request_body["user_id"])
+    if not user: 
+        return "usuario no existe", 404
+    image_binary = get(request_body[picture]).content
+    print(image_binary)
+    #with store_context(store):
+     #   inventory.picture.from_blob(image_binary)
+    inventory = Inventory ( request_body["category"], request_body["product"], request_body["picture"], request_body["description"], request_body["price"], request_body["user_id"])    
+    return "Done", 200
 
 
 
@@ -70,14 +82,7 @@ def password_user(id):
 
 
 
-#API INVENTORY POST
-@api.route('/inventory/users', methods = ['POST'])
-def inventory_user():
-    inventory1 = Invetory.query.all()
-    inventory1 = list(map(lambda inventory1:inventory1.serialize(), inventory_db))
-  #  request_body = request.json 
-    _inventory.append(request_body)
-    return jsonify(_inventory), 200
+
 """
 #API inventory GET testing <----
 @api.route('/inventory', methods = ['GET'])
