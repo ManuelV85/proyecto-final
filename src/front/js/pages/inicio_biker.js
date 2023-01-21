@@ -23,7 +23,7 @@ export const Biker = () => {
           type="submit"
           className="btn btn-dark"
         >
-          Viaje
+          Viajes
         </button>
 
         <button
