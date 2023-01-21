@@ -7,7 +7,7 @@ from api.utils import generate_sitemap, APIException
 from random import randint
 
 api = Blueprint('api', __name__)
-
+#eliminar 
 _users = [{
 
             "name/WS_name": "Gokubike",
@@ -53,7 +53,29 @@ def all_users():
 
     return jsonify(users_db), 200
 
-#API GET user 
+#API user GET by id
+@api.route('/users/<int:id>', methods = ['GET'])
+def id_users(id):
+    users_db = User.query.get(id)
+    if users_db is None:
+        return "No existe usuario", 404
+    return users_db.serialize(), 200
+    
+#API POST Sing in <---
+@api.route('/signin/users', methods = ['POST'])
+def add_user():
+    request_body = request.json 
+    user = User(request_body["name"], request_body["last_name"], request_body["email"], request_body["address"], request_body["password"], request_body["type"])
+    db.session.add(user)
+    db.session.commit()
+    return "Done", 200
+
+
+
+
+    
+
+   #API GET user by id
 @api.route('/login/user/<int:id>', methods = ['GET'])
 def login_user(id):
     for  user in (_users):
@@ -71,14 +93,7 @@ def password_user(id):
             return jsonify(user), 200
     return "USUARIO NO EXISTE", 400
 
-#API POST Sing in <---
-@api.route('/singin/users', methods = ['POST'])
-def add_user():
-    user = User.query.all()
-    user = list(map(lambda p:p.serialize(), User))
-    request_body = request.json 
-    _users.append(request_body)
-    return jsonify(_users), 200
+
 
 #API INVENTORY POST
 @api.route('/inventory/users', methods = ['POST'])
@@ -89,7 +104,7 @@ def inventory_user():
     _inventory.append(request_body)
     return jsonify(_inventory), 200
 
-#API inventory GET testing
+#API inventory GET testing <----
 @api.route('/inventory', methods = ['GET'])
 def all_inventory():
     inventory_db = Inventory.query.all()
@@ -97,7 +112,7 @@ def all_inventory():
 
     return jsonify(inventory_db), 200
 
-#API scheduling GET testing
+#API scheduling GET testing <----
 @api.route('/scheduling', methods = ['GET'])
 def all_scheduling():
     scheduling_db = Scheduling.query.all()
@@ -105,7 +120,7 @@ def all_scheduling():
 
     return jsonify(scheduling_db), 200
 
-#API order GET testing
+#API order GET testing <----
 @api.route('/order', methods = ['GET'])
 def all_order():
     order_db = Order.query.all()

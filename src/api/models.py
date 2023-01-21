@@ -1,5 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
+
 db = SQLAlchemy()
 """
 class User(db.Model):
@@ -35,9 +36,18 @@ class User(db.Model):
             "name": self.name,
             "last_name": self.last_name,
             "email": self.email,
-            "addres": self.address,
+            "address": self.address,
             "type": self.type
         }
+    
+    def __init__(self, name, last_name, email, address, password, type):
+        self.name = name
+        self.last_name = last_name
+        self.email = email
+        self.address = address
+        self.password = password
+        self.type = type
+        
 
 
 #API inventory "POST"
@@ -101,8 +111,8 @@ class Order(db.Model):
         }
 
 """
-class OrderItem(Base):
-    __tablename__ = 'orderitem'
+class Order_item(db.Model):
+    __tablename__ = 'order_item'
     id = Column(Integer, primary_key=True)
     order_id = Column(Integer, ForeignKey('order.id'), nullable=False)
     order = relationship(Order)
