@@ -124,7 +124,16 @@ export const Registration = () => {
         {mostrarComponente ? (
           <>
             <label for="exampleInputEmail1" className="form-label">
-              horario
+              horario Ej:(8:00 a 17:00)
+            </label>
+            <input
+              type="email"
+              className="form-control"
+              id="exampleInputEmail1elim"
+              aria-describedby="emailHelp"
+            />
+            <label for="exampleInputEmail1" className="form-label">
+              dias Ej:(Lun-Mar)
             </label>
             <input
               type="email"
