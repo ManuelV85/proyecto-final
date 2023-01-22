@@ -40,7 +40,7 @@ export const Registration = () => {
           Nombre
         </label>
         <input
-          type="email"
+          type="text"
           className="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
@@ -50,7 +50,7 @@ export const Registration = () => {
           Apellido
         </label>
         <input
-          type="email"
+          type="text"
           className="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
@@ -82,7 +82,7 @@ export const Registration = () => {
           Contraseña
         </label>
         <input
-          type="email"
+          type="text"
           className="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
@@ -105,7 +105,7 @@ export const Registration = () => {
           Repita contraseña
         </label>
         <input
-          type="email"
+          type="text"
           className="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
@@ -115,7 +115,7 @@ export const Registration = () => {
           Direccion
         </label>
         <input
-          type="email"
+          type="text"
           className="form-control"
           id="exampleInputEmail1"
           aria-describedby="emailHelp"
@@ -127,7 +127,7 @@ export const Registration = () => {
               horario Ej:(8:00 a 17:00)
             </label>
             <input
-              type="email"
+              type="text"
               className="form-control"
               id="exampleInputEmail1elim"
               aria-describedby="emailHelp"
@@ -136,7 +136,7 @@ export const Registration = () => {
               dias Ej:(Lun-Mar)
             </label>
             <input
-              type="email"
+              type="text"
               className="form-control"
               id="exampleInputEmail1elim"
               aria-describedby="emailHelp"
