@@ -24,8 +24,8 @@ def setup_commands(app):
                  "villate" + " " +  str(x),\
                 "test_user" + " " + str(x) + "@test.com",\
                 "algun lugar",\
-                 "123456",\
-                 "biker"  )
+                 "123456"
+                   )
            
             db.session.add(user)
             db.session.commit()
