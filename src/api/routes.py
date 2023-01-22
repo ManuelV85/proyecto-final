@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Inventory, Scheduling, Order
+from api.models import db, User, Inventory
 from api.utils import generate_sitemap, APIException
 from random import randint
 import uuid
@@ -23,20 +23,44 @@ def root():
 
 @api.route('/signin', methods = ['POST'])
 def signin():
-    data = request.from
+    
+    info = request.form('name', 'last_name', 'email', 'addres', 'password')
+
+    user = User.query\
+        .filter_by(email = email)\
+        .first()
+
+    if not user:
+        user = User(
+            id = str((uuid.uuid4())), 
+            last_name= last_name,
+            email = email, 
+            password = generate_password_hash(password),
+            type= type  
+            
+        )
+        db.session.add(user)
+        de.session.commit()
+
+        return make_response('Successfully registred.', 201)
+    else:
+        return make_response('User already exist. Please Log in', 202)
 
 
 
 
 
 
+#API POST Sing in <---
+@api.route('/signin/users', methods = ['POST'])
+def add_user():
+    request_body = request.json 
+    user = User(request_body["name"], request_body["last_name"], request_body["email"], request_body["address"], request_body["password"])
+    db.session.add(user)
+    db.session.commit()
+    return "Done", 200
 
-
-
-
-
-    """
-
+"""
 #API user GET
 @api.route('/users', methods = ['GET'])
 def all_users():
@@ -53,14 +77,7 @@ def id_users(id):
         return "No existe usuario", 404
     return users_db.serialize(), 200
     
-#API POST Sing in <---
-@api.route('/signin/users', methods = ['POST'])
-def add_user():
-    request_body = request.json 
-    user = User(request_body["name"], request_body["last_name"], request_body["email"], request_body["address"], request_body["password"], request_body["type"])
-    db.session.add(user)
-    db.session.commit()
-    return "Done", 200
+
 
 #API INVENTORY POST
 @api.route('/inventory/users', methods = ['POST'])

@@ -1,25 +1,9 @@
 from flask_sqlalchemy import SQLAlchemy
 from flask import jsonify
-
+from flask_jwt_extended import create_access_token, jwt_required
 
 db = SQLAlchemy()
-"""
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
 
-    def __repr__(self):
-        return f'<User {self.email}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            # do not serialize the password, its a security breach
-        }
-"""
 #API sing in "POST"
 class User(db.Model):
     __tablename__ = 'user'
@@ -38,16 +22,17 @@ class User(db.Model):
             "last_name": self.last_name,
             "email": self.email,
             "address": self.address,
-            "type": self.type
+           
         }
     
-    def __init__(self, name, last_name, email, address, password, type):
+    def __init__(self, name, last_name, email, address, password):
         self.name = name
         self.last_name = last_name
         self.email = email
         self.address = address
         self.password = password
-        self.type = type
+
+            
         
 
 
@@ -75,7 +60,7 @@ class Inventory(db.Model):
             }
     
 
-
+"""
 class Scheduling(db.Model):
     __tablename__ = 'scheduling'
     id_scheduling = db.Column(db.Integer, primary_key=True)
@@ -112,7 +97,7 @@ class Order(db.Model):
 
         }
 
-"""
+
 class Order_item(db.Model):
     __tablename__ = 'order_item'
     id = Column(Integer, primary_key=True)
