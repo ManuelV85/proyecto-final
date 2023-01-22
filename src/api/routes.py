@@ -6,6 +6,8 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from random import randint
 import uuid
+from  werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, jwt_required
 
 
 api = Blueprint('api', __name__)
@@ -22,21 +24,30 @@ def handle_hello():
 @api.route('/signin', methods = ['POST'])
 def signin():
     
-    info = request.form('name', 'last_name', 'email', 'addres', 'password')
+    name = request.json["name"]
+    last_name = request.json["last_name"]
+    email = request.json["email"]
+    address = request.json["address"]
+    password = request.json["password"]
 
-    user = User.query\
-        .filter_by(email = email)\
-        .first()
+    if not (name and last_name and email):
+        return jsonify({"error": "invalid"}), 400
 
+    #checking for a existing user
+    user = User.query.filter_by(email = email).first()
+    
     if not user:
         user = User(
-            id = str((uuid.uuid4())), 
+            id = str(uuid.uuid4()),
+            name = name, 
             last_name= last_name,
             email = email, 
+            address = address,
             password = generate_password_hash(password),
-            type= type  
-            
+            is_active = True
+                        
         )
+        #insert new user
         db.session.add(user)
         de.session.commit()
 
@@ -49,7 +60,7 @@ def signin():
 
 
 
-#API POST Sing in <---
+#API POST Sing in <--- test for insert data
 @api.route('/signin/users', methods = ['POST'])
 def add_user():
     request_body = request.json 
