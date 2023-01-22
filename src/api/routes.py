@@ -6,8 +6,7 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from random import randint
 import uuid
-from  werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required
+
 
 api = Blueprint('api', __name__)
 
