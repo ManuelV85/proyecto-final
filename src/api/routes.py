@@ -24,16 +24,13 @@ def handle_hello():
 @api.route('/signin', methods = ['POST'])
 def signin():
     
-    name = request.json["name"]
-    last_name = request.json["last_name"]
-    email = request.json["email"]
-    address = request.json["address"]
-    password = request.json["password"]
+    data = request.form
 
-    if not (name and last_name and email):
-        return jsonify({"error": "invalid"}), 400
-
+    #get email and password
+    email = data.get('email')
+    password = data.get('password')
     #checking for a existing user
+
     user = User.query.filter_by(email = email).first()
     
     if not user:
@@ -71,7 +68,30 @@ def add_user():
 
 #API user GET all users
 @api.route('/users', methods = ['GET'])
+@jwt_required()
 def all_users():
     users_db = User.query.all()
     users_db = list(map(lambda user:user.serialize(), users_db))
     return jsonify(users_db), 200
+
+#API login 
+@api.route('/login', methods = ['POST'])
+def login():
+    auth = request.form
+
+    if not auth or not auth.get('email') or not auth.get('password'):
+        return make_response('Could not verify', 401, {'WWW-Authenticate': 'Basic realm="Login required"'})
+
+        user = User.query.filter_by(mail = auth.get('mail')).first()
+
+        if not user:
+            return make_response('Could not',401, {'WWW-Authenticate': 'Basic realm = "Wrong User or Password"'})
+        
+        if check_password_hash(user.password, auth.get('password')):
+        #if check_password_hash(user.password_hash, auth.get('password')):
+            access_token = create_access_token(identity = user.id)
+            return jsonify({"token": access_token, "user_id": user.id})
+        
+    # if password is wrong  then returns 403
+    return make_response('Could not verify', 403, {'WWW-Authenticate': 'Basic realm="Wrong User or Password"'})
+
