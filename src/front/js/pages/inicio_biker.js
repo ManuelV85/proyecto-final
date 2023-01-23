@@ -27,7 +27,7 @@ export const Biker = () => {
         </button>
 
         <button
-          onClick={() => alert("proximamente")}
+          onClick={() => navigate("/sos")}
           type="submit"
           className="btn btn-danger"
         >

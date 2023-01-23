@@ -9,6 +9,7 @@ import { Footer } from "./component/footer";
 import { Login } from "./pages/Login";
 import { Registration } from "./pages/Registration";
 import { Biker } from "./pages/inicio_biker";
+import { Sos } from "./pages/sos";
 import { UserStore } from "./pages/userState";
 
 import { MenuStore } from "./pages/inicio_Store.js";
@@ -37,6 +38,7 @@ const Layout = () => {
             <Route element={<Upload_item />} path="/upload_item" />
             <Route element={<Tableinventary />} path="/tableinventary" />
             <Route element={<Emailpassword />} path="/emailpassword" />
+            <Route element={<Sos/>} path="/sos" />
           </Routes>
         </BrowserRouter>
       </div>
