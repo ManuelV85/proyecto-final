@@ -1,7 +1,7 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import React from "react";
+
+import React, { useState } from "react";
 
 export const Registration = () => {
   const navigate = useNavigate();
@@ -36,33 +36,35 @@ export const Registration = () => {
         </button>
       </div>
       <div className="mb-3">
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="name" className="form-label">
           Name
         </label>
         <input
-          type="email"
+          type="Name"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="Name"
+          aria-describedby="name"
         />
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="last-name" className="form-label">
           Last-Name
         </label>
         <input
-          type="email"
+          type="last-name"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="Last-name"
+          aria-describedby="last-name"
         />
 
         <label for="exampleInputEmail1" className="form-label">
           E-mail{" "}
         </label>
         <input
+          title="email"
+          name="user_email"
           type="email"
           className="form-control"
-          id="exampleInputEmail1"
+          id="email"
           aria-describedby="emailHelp"
           {...register("email", {
             required: {
@@ -78,14 +80,15 @@ export const Registration = () => {
         <div className="error">
           {errors.email && <span>{errors.email.message}</span>}
         </div>
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="password" className="form-label">
           Pasword
         </label>
         <input
-          type="email"
+          title="Password"
+          type="password"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="password"
+          aria-describedby="password"
           {...register("password", {
             required: {
               value: true,
@@ -97,51 +100,47 @@ export const Registration = () => {
             },
           })}
         />
-         <div className="error">
+        <div className="error">
           {errors.password && <span>{errors.password.message}</span>}
         </div>
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="repeat-password" className="form-label">
           Repeat Password
         </label>
         <input
-          type="email"
+          type="password"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="password"
+          aria-describedby="password"
         />
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="address" className="form-label">
           Addressn
         </label>
         <input
-          type="email"
+          type="address"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="addrress"
+          aria-describedby="addrress"
         />
 
         {mostrarComponente ? (
           <>
-            <label for="exampleInputEmail1" className="form-label">
+            <label for="horario" className="form-label">
               horario
             </label>
             <input
-              type="email"
+              type="Horario"
               className="form-control"
-              id="exampleInputEmail1elim"
-              aria-describedby="emailHelp"
+              id="horario"
+              aria-describedby="horario"
             />
           </>
         ) : (
           <></>
         )}
       </div>
-      <button
-       
-        type="submit"
-        className="btn btn-dark"
-      >
+      <button type="submit" className="btn btn-dark" value="Send">
         Create Acount
       </button>
     </form>
