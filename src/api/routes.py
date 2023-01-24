@@ -36,7 +36,7 @@ def signin():
     if not user:
         user = User(
             id = str(uuid.uuid4()),
-            name = name, 
+            first_name = first_namename, 
             last_name= last_name,
             email = email, 
             address = address,
@@ -61,7 +61,7 @@ def signin():
 @api.route('/signin/users', methods = ['POST'])
 def add_user():
     request_body = request.json 
-    user = User(request_body["name"], request_body["last_name"], request_body["email"], request_body["address"], request_body["password"])
+    user = User(request_body["first_name"], request_body["last_name"], request_body["email"], request_body["address"], request_body["password"])
     db.session.add(user)
     db.session.commit()
     return "Done", 200

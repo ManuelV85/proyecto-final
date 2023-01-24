@@ -17,6 +17,23 @@ export const Registration = () => {
     console.log(evento);
   };
 
+  const data = {
+    first_name: first_name.toLowerCase(),
+    last_name: last_name.toLowrCase(),
+    email: email.toLowerCase(),
+    password: password,
+    address: address.toLowerCase()
+ };
+
+  fetch(process.env.BACKEND_URL + " /api/signin", {
+      method:"POST",
+       headers:{
+                "Content-Type": "applocation/json"},
+                body: JSON.stringify(data)
+      }
+    )
+
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contenedor-login">
       <div className="mb-3">

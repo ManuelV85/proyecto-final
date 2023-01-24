@@ -21,7 +21,7 @@ class User(db.Model):
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.String(100), primary_key=True)
-    name = db.Column(db.String(250), nullable=False)
+    first_name = db.Column(db.String(250), nullable=False)
     last_name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), nullable=False)
     password = db.Column(db.String(250), nullable=False)
@@ -31,15 +31,15 @@ class User(db.Model):
     def serialize (self):
         return{
             "id": self.id,
-            "name": self.name,
+            "first_name": self.first_name,
             "last_name": self.last_name,
             "email": self.email,
             "address": self.address,
            
         }
     
-    def __init__(self, name, last_name, email, address, password):
-        self.name = name
+    def __init__(self, first_name, last_name, email, address, password):
+        self.first_name = first_name
         self.last_name = last_name
         self.email = email
         self.address = address
