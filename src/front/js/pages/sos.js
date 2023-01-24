@@ -10,7 +10,7 @@ export const Sos = () => {
   return (
     <form className="contenedor-login">
       <div className="mb-3">
-        <Logo />
+        
         <Mapas/>
       </div>
      

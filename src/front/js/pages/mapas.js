@@ -5,11 +5,12 @@ export const Mapas =() =>{
     return(
         <div className="container">
             <GoogleMaps
-            style={{height : "500px", width: "370px"}}
-            zoom={10}
+            apiKey= {("AIzaSyCS3Frzif9t39ykB4WlbAipLjJ7uQeOxTg")}
+            style={{height : "500px", width: "290px"}}
+            zoom={15}
             center={{
-                lat: 9.427374,
-                lng: -1.666874,
+                lat: -33.5070426,
+                lng: -70.6609057,
             }}
          />
         </div>
