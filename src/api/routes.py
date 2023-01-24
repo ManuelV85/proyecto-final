@@ -6,8 +6,8 @@ from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from random import randint
 import uuid
-from  werkzeug.security import generate_password_hash, check_password_hash
-from flask_jwt_extended import create_access_token, jwt_required
+#from  werkzeug.security import generate_password_hash, check_password_hash
+#from flask_jwt_extended import create_access_token, jwt_required
 
 
 api = Blueprint('api', __name__)
@@ -20,7 +20,7 @@ def handle_hello():
     }
     return jsonify(response_body), 200
 """
-
+"""
 @api.route('/signin', methods = ['POST'])
 def signin():
     
@@ -65,15 +65,15 @@ def add_user():
     db.session.add(user)
     db.session.commit()
     return "Done", 200
-
+"""
 #API user GET all users
 @api.route('/users', methods = ['GET'])
-@jwt_required()
+#@jwt_required()
 def all_users():
     users_db = User.query.all()
     users_db = list(map(lambda user:user.serialize(), users_db))
     return jsonify(users_db), 200
-
+"""
 #API login 
 @api.route('/login', methods = ['POST'])
 def login():
@@ -95,3 +95,4 @@ def login():
     # if password is wrong  then returns 403
     return make_response('Could not verify', 403, {'WWW-Authenticate': 'Basic realm="Wrong User or Password"'})
 
+""" 
