@@ -1,11 +1,14 @@
 import React, { pages } from "react";
 import  GoogleMaps from "simple-react-google-maps";
 
+const key = process.env.API_MAPS
+console.log(key)
 export const Mapas =() =>{
+    
     return(
         <div className="container">
             <GoogleMaps
-            apiKey= {("AIzaSyCS3Frzif9t39ykB4WlbAipLjJ7uQeOxTg")}
+            apiKey= {key}
             style={{height : "500px", width: "290px"}}
             zoom={15}
             center={{
