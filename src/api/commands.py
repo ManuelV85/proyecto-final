@@ -51,6 +51,7 @@ def setup_commands(app):
             db.session.commit()
         print(" all test inventory created")
 
+"""
     @app.cli.command("insert-test-scheduling")
     @click.argument("count")
     def insert_test_scheduling(count):
@@ -78,3 +79,4 @@ def setup_commands(app):
             db.session.add(order)
             db.session.commit()
         print("testing order")
+        """

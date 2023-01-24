@@ -21,7 +21,7 @@ class User(db.Model):
 """
 
 
-#API sing in "POST"
+
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -30,7 +30,7 @@ class User(db.Model):
     email = db.Column(db.String(250), nullable=False)
     password = db.Column(db.String(250), nullable=False)
     address = db.Column(db.String(250), nullable=False)
-    #type = db.Column(db.String(250), nullable=False)
+    
 
     def serialize (self):
         return{
@@ -51,6 +51,23 @@ class User(db.Model):
 
     def __repr__(self):
         return f"{self.first_name}: {self.last_name}: {self.email}: {self.password}: {self.address}"
+
+
+class Ws_store(db.Model):
+    __tablename__= 'ws_store'
+    id_ws = db.Column(db.Integer, primary_key = True)
+    name_ws_store = db.Column(db.String(250), nullable = False)
+    email_ws_store = db.Column(db.String(250), nullable = False)
+    addres_ws_store = db.Column(db.String(250), nullable = False)
+    scheduling_ws_store = db.Column(db.String(250), nullable = False)
+
+def serialize (self):
+    return {
+        "id_ws": self.id_ws,
+        "name_ws_store" : self.name_ws_store,
+    }
+
+
 
 class Inventory(db.Model):
     __tablename__ = 'inventory'
@@ -74,7 +91,7 @@ class Inventory(db.Model):
             "user_id":self.user_id 
             
             }
-"""
+
     def __init__(self, category, product, picture, description, price, user_id):
         self.category = category
         self.product = product
@@ -84,4 +101,3 @@ class Inventory(db.Model):
 
     def __repr__(self):
         return f"{self.category}: {self.product}: {self.description}: {self.price}: {self.user_id}"   
-"""
