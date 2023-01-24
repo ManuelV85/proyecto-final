@@ -57,7 +57,7 @@ class Inventory(db.Model):
     id_item = db.Column(db.Integer, primary_key=True)
     category = db.Column(db.String(250), nullable=False)
     product = db.Column(db.String(250), nullable=False)
-    #picture = db.Column(db.BLOB)
+    picture = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
@@ -71,10 +71,11 @@ class Inventory(db.Model):
             "picture": self.picture,
             "description": self.description,
             "price": self.price,
+            "user_id":self.user_id 
             
             }
-
-    def __init__(self, category, product, description, price, user_id):
+"""
+    def __init__(self, category, product, picture, description, price, user_id):
         self.category = category
         self.product = product
         self.description = description
@@ -83,3 +84,4 @@ class Inventory(db.Model):
 
     def __repr__(self):
         return f"{self.category}: {self.product}: {self.description}: {self.price}: {self.user_id}"   
+"""
