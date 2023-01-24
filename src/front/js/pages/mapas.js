@@ -1,7 +1,7 @@
 import React, { pages } from "react";
 import  GoogleMaps from "simple-react-google-maps";
 
-const key = process.env.API_MAPS
+// const key = process.env.API_MAPS
 console.log(key)
 export const Mapas =() =>{
     
