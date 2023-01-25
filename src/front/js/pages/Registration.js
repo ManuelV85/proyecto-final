@@ -13,8 +13,25 @@ export const Registration = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (evento) => {
-    console.log(evento);
+  const onSubmit = async (dataUser) => {
+    //event.preventDefault();
+    console.log(dataUser);
+    const response = await fetch(
+      "https://3001-manuelv85-proyectofinal-v7aexyo3isp.ws-us84.gitpod.io/api/signin/users",
+      {
+        crossDomain: true,
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(dataUser),
+      }
+    ).then((response) => response.json());
+    if (response["code"] == 1) {
+      alert(response["response"]);
+    } else if (response["code"] == 0) alert(response["response"]);
   };
 
   return (
@@ -36,33 +53,34 @@ export const Registration = () => {
         </button>
       </div>
       <div className="mb-3">
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputName" className="form-label">
           Nombre
         </label>
         <input
           type="text"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="InputName"
+          {...register("first_name")}
         />
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputLastName" className="form-label">
           Apellido
         </label>
         <input
           type="text"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="InputLastName"
+          {...register("last_name")}
         />
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="exampleInputEmail" className="form-label">
           E-mail{" "}
         </label>
         <input
           type="email"
           className="form-control"
-          id="exampleInputEmail1"
+          id="exampleInputEmail"
+          {...register("email")}
           aria-describedby="emailHelp"
           {...register("email", {
             required: {
@@ -78,14 +96,13 @@ export const Registration = () => {
         <div className="error">
           {errors.email && <span>{errors.email.message}</span>}
         </div>
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputPassword" className="form-label">
           Contraseña
         </label>
         <input
           type="text"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="InputPassword"
           {...register("password", {
             required: {
               value: true,
@@ -97,60 +114,41 @@ export const Registration = () => {
             },
           })}
         />
-         <div className="error">
+        <div className="error">
           {errors.password && <span>{errors.password.message}</span>}
         </div>
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputRepeatPassword" className="form-label">
           Repita contraseña
         </label>
-        <input
-          type="text"
-          className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-        />
+        <input type="text" className="form-control" id="InputRepeatPassword" />
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputAddress" className="form-label">
           Direccion
         </label>
         <input
           type="text"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="InputAddress"
+          {...register("address")}
         />
 
         {mostrarComponente ? (
           <>
-            <label for="exampleInputEmail1" className="form-label">
+            <label for="InputHours" className="form-label">
               horario Ej:(8:00 a 17:00)
             </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputEmail1elim"
-              aria-describedby="emailHelp"
-            />
-            <label for="exampleInputEmail1" className="form-label">
+            <input type="text" className="form-control" id="InputHours" />
+            <label for="InputScheduling" className="form-label">
               dias Ej:(Lun-Mar)
             </label>
-            <input
-              type="text"
-              className="form-control"
-              id="exampleInputEmail1elim"
-              aria-describedby="emailHelp"
-            />
+            <input type="text" className="form-control" id="InputScheduling" />
           </>
         ) : (
           <></>
         )}
       </div>
-      <button
-       
-        type="submit"
-        className="btn btn-dark"
-      >
+      <button type="submit" className="btn btn-dark">
         Crear cuenta
       </button>
     </form>

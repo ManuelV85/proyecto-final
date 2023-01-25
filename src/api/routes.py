@@ -1,11 +1,12 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, make_response
 from api.models import db, User, Inventory, Ws_store
 from api.utils import generate_sitemap, APIException
 import uuid
 from  werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import create_access_token, jwt_required
 
 api = Blueprint('api', __name__)
 
@@ -20,33 +21,74 @@ def handle_hello():
 
 @api.route('/signin/users', methods = ['POST'])
 def add_user():
-
-    """
-    #dictionary of the form data
-    data = request.form 
-    #gets email and password
-    email = data.get('email')
-    password = data.get('password')
-    #checking for existing user
-    user = User.query.filter_by(email = email).first()
+    try:
+        #objeto json
+        print(request.json)
+        data = request.json
+        print(data)
+        #gets email and password
+        email = data["email"]
+        #checking for existing user
+        user = User.query.filter_by(email = email).first()
+   
     
-    if not user:
-        user = User(
-        id = str(uuid.uuid4()),
-        first_name = first_name,
-        last_name = last_name, 
-        email = email,
-        password = data.generate_password_hash(password),
-        address = address, 
-        is_active = True
+        if user is None:
+            
+            request_body = request.json 
+            #user = User(request_body["first_name"], request_body["last_name"], request_body["email"], request_body["password"], request_body["address"])
+            user = User(
+            first_name = request_body["first_name"],
+            last_name = request_body["last_name"], 
+            email = request_body["email"],
+            password = generate_password_hash(request_body["password"]),
+            address = request_body["address"], 
+            )
+        #insert users
+            db.session.add(user)
+            db.session.commit()
+            #return make_response("Done", 200) cambio para conectar con front 
+            response = jsonify(response= "Done", status = 200, code = 0)
+            response.headers.add('Access-Control-Allow-Origin', '*')
+            return response
+
+        return jsonify(response ="usuario ya existe", status = 200, code = 1) #<--- la petición esta bien hecha 
+    except Exception as e:
+        print(e)
+
+@api.route('/login', methods =['POST'])
+def login():
+    # creates dictionary of form data
+    auth = request.json
+
+    if not auth or not auth['email'] or not auth['password']:
+        # returns 401 if any email or / and password is missing
+        return make_response(
+            'Could not verify',
+            401,
+            {'WWW-Authenticate' : 'Basic realm ="Login required !!"'}
+            )
+
+    user = User.query.filter_by(email = auth['email']).first()
+
+    if user is None:
+        # returns 401 if user does not exist
+        return make_response(
+            'El usuario no existe',
+            200, #no es una petición mal hecha 
+            {'WWW-Authenticate' : 'Basic realm ="Wrong User or Password !!"'}
         )
-"""
-    request_body = request.json 
-    user = User(request_body["first_name"], request_body["last_name"], request_body["email"], request_body["password"], request_body["address"])
-   #insert users
-    db.session.add(user)
-    db.session.commit()
-    return "Done", 200
+    print(user.password)
+    if check_password_hash(user.password, auth['password']) == True:
+        # generates the JWT Token
+        access_token = create_access_token(identity=user.id)
+        print(access_token)
+        return jsonify({ "token": access_token, "user_id": user.id })
+    # returns 403 if password is wrong
+    return make_response(
+        'Could not verify',
+        403,
+        {'WWW-Authenticate' : 'Basic realm ="Wrong User or Password !!"'}
+    )
 
 #API user GET
 @api.route('/users', methods = ['GET'])
