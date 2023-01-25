@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User, Inventory
+from api.models import db, User, Inventory, Ws_store
 from api.utils import generate_sitemap, APIException
 import uuid
 from  werkzeug.security import generate_password_hash, check_password_hash
@@ -18,7 +18,7 @@ def handle_hello():
     return jsonify(response_body), 200
     """
 
-@api.route('/signin', methods = ['POST'])
+@api.route('/signin/users', methods = ['POST'])
 def add_user():
 
     """
@@ -62,6 +62,22 @@ def id_users(id):
     if users_db is None:
         return "No existe usuario", 404
     return users_db.serialize(), 200
+
+#APi ws_store 
+@api.route('/signin/ws', methods = ['POST'])
+def add_ws():
+    request_body = request.json
+    ws_store_db = Ws_store(request_body["id_ws"], request_body["name_ws_store"], request_body["email_ws_store"], request_body["password_ws_store"], request_body["address_ws_store"], request_body["scheduling_ws_store"])
+    db.session.add(ws_store_db)
+    db.session.commit()
+    return "Done", 200
+
+#API ws_store GET
+@api.route('/ws', methods = ['GET'])
+def all_ws():
+    ws_db = Ws_store.query.all()
+    ws_db = list(map(lambda ws_store: ws_store.serialize(), ws_db))
+    return jsonify(ws_db), 200
 
 
 #API INVENTORY POST

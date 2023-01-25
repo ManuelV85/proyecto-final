@@ -56,14 +56,30 @@ class Ws_store(db.Model):
     id_ws = db.Column(db.Integer, primary_key = True)
     name_ws_store = db.Column(db.String(250), nullable = False)
     email_ws_store = db.Column(db.String(250), nullable = False)
-    addres_ws_store = db.Column(db.String(250), nullable = False)
+    password_ws_store = db.Column(db.String(250), nullable = False)
+    address_ws_store = db.Column(db.String(250), nullable = False)
     scheduling_ws_store = db.Column(db.String(250), nullable = False)
 
 def serialize (self):
     return {
         "id_ws": self.id_ws,
         "name_ws_store" : self.name_ws_store,
+        "email_ws_store": self.email_ws_store,
+        "address_ws_store": self.addres_ws_store,
+        "scheduling_ws_store": self.scheduling_ws_store
     }
+def __init__(self, id_ws, name_ws_store, email_ws_store, passwor_ws_store, address_ws_store, scheduling_ws_store):
+    self.id_ws = id_ws
+    self.name_ws_store = name_ws_store
+    self.email_ws_store = email_ws_store
+    self.password_ws_store = password_ws_store
+    self.address_ws_store = address_ws_store
+    self.scheduling_ws_store = scheduling_ws_store
+
+def __repr__(self):
+    return f"{self.id_ws}{self.name_ws_store}: {self.email_ws_store}: {self.passwor_ws_store}: {self.address_ws_store}: {self.scheduling_ws_store}"
+
+
 
 
 
