@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
+
 """
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -15,31 +16,19 @@ class User(db.Model):
             "email": self.email,
             # do not serialize the password, its a security breach
         }
-        """
+"""
 
-#API sing in "POST"
+
+
 class User(db.Model):
-    __tablename__ = 'users'
-    id = db.Column(db.String(100), primary_key=True)
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(250), nullable=False)
     last_name = db.Column(db.String(250), nullable=False)
     email = db.Column(db.String(250), nullable=False)
     password = db.Column(db.String(250), nullable=False)
     address = db.Column(db.String(250), nullable=False)
-    #type = db.Column(db.String(250), nullable=False)
-
-    def __init__(self, first_name, last_name, email, password, address):
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.password = password
-        self.address = address
-        
-        
-    def __repr__(self):
-        return f"{self.first_name}: {self.last_name}: {self.email}: {self.password}: {self.address}"
-
-
+    
 
     def serialize (self):
         return{
@@ -50,17 +39,43 @@ class User(db.Model):
             "address": self.address,
            
         }
+    
+    def __init__(self, first_name, last_name, email, password, address):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.password = password
+        self.address = address
 
-    #API inventory "POST"
+    def __repr__(self):
+        return f"{self.first_name}: {self.last_name}: {self.email}: {self.password}: {self.address}"
+
+
+class Ws_store(db.Model):
+    __tablename__= 'ws_store'
+    id_ws = db.Column(db.Integer, primary_key = True)
+    name_ws_store = db.Column(db.String(250), nullable = False)
+    email_ws_store = db.Column(db.String(250), nullable = False)
+    addres_ws_store = db.Column(db.String(250), nullable = False)
+    scheduling_ws_store = db.Column(db.String(250), nullable = False)
+
+def serialize (self):
+    return {
+        "id_ws": self.id_ws,
+        "name_ws_store" : self.name_ws_store,
+    }
+
+
+
 class Inventory(db.Model):
     __tablename__ = 'inventory'
     id_item = db.Column(db.Integer, primary_key=True)
     category = db.Column(db.String(250), nullable=False)
     product = db.Column(db.String(250), nullable=False)
-    #picture = db.Column(db.BLOB)
+    picture = db.Column(db.String(250), nullable=False)
     description = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     user = db.relationship(User)
 
     def serialize (self):
@@ -71,47 +86,16 @@ class Inventory(db.Model):
             "picture": self.picture,
             "description": self.description,
             "price": self.price,
-            "user": self.user.name
+            "user_id":self.user_id 
+            
             }
-    
 
+    def __init__(self, category, product, picture, description, price, user_id):
+        self.category = category
+        self.product = product
+        self.description = description
+        self.price = price 
+        self.user_id = user_id
 
-class Scheduling(db.Model):
-    __tablename__ = 'scheduling'
-    id_scheduling = db.Column(db.Integer, primary_key=True)
-    start_hour = db.Column(db.String(250), nullable=False)
-    end_hour = db.Column(db.String(250), nullable=False)
-    day = db.Column(db.String(250), nullable=False)
-    #user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    #user = relationship(User)
-    def serialize(self):
-        return{
-            "id_scheduling": self.id_scheduling,
-            "start_hour": self.start_hour,
-            "end_hour": self.end_hour,
-            "day": self.day,
-        }
-   
-class Order(db.Model):
-    __tablename__ = 'order'
-    id_order = db.Column(db.Integer, primary_key=True)
-    total_price = db.Column(db.Integer, nullable=False)
-    status_commit = db.Column(db.String(250), nullable=False)
-    #user_id = Column(Integer, ForeignKey('user.id'), nullable=False)
-    #user = relationship(User)
-    
-    def serialize(self):
-        return{
-            "id_order": self.id_order,
-            "total_price": self.total_price,
-            "status_commit": self.status_commit
-        }
-        """
-class Order_item(db.Model):
-    __tablename__ = 'order_item'
-    id = Column(Integer, primary_key=True)
-    order_id = Column(Integer, ForeignKey('order.id'), nullable=False)
-    order = relationship(Order)
-    inventory_id = Column(Integer, ForeignKey('inventory.id'), nullable=False)
-    inventory = relationship(Inventory)
-    """
+    def __repr__(self):
+        return f"{self.category}: {self.product}: {self.description}: {self.price}: {self.user_id}"  

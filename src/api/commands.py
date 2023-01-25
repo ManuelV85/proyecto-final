@@ -1,5 +1,5 @@
 import click
-from api.models import db, User
+from api.models import db, User, Inventory
 """
 In this file, you can add as many commands as you want using the @app.cli.command decorator
 Flask commands are usefull to run cronjobs or tasks outside of the API but sill in integration 
@@ -51,6 +51,7 @@ def setup_commands(app):
             db.session.commit()
         print(" all test inventory created")
 
+"""
     @app.cli.command("insert-test-scheduling")
     @click.argument("count")
     def insert_test_scheduling(count):
@@ -64,8 +65,6 @@ def setup_commands(app):
             db.session.add(scheduling)
             db.session.commit()  
         print(" testing scheduling")      
-
-
     @app.cli.command("insert-test-order")
     @click.argument("count")
     def insert_test_order(count):
@@ -78,3 +77,4 @@ def setup_commands(app):
             db.session.add(order)
             db.session.commit()
         print("testing order")
+        """
