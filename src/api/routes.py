@@ -18,7 +18,7 @@ def handle_hello():
     }
     return jsonify(response_body), 200
     """
-
+#sigin users
 @api.route('/signin/users', methods = ['POST'])
 def add_user():
     try:
@@ -35,7 +35,6 @@ def add_user():
         if user is None:
             
             request_body = request.json 
-            #user = User(request_body["first_name"], request_body["last_name"], request_body["email"], request_body["password"], request_body["address"])
             user = User(
             first_name = request_body["first_name"],
             last_name = request_body["last_name"], 
@@ -47,13 +46,53 @@ def add_user():
             db.session.add(user)
             db.session.commit()
             #return make_response("Done", 200) cambio para conectar con front 
-            response = jsonify(response= "Done", status = 200, code = 0)
+            response = jsonify(response= "Se creo usuario exitosamente", status = 200, code = 0)
+            response.headers.add('Access-Control-Allow-Origin', '*') #<--- preguntar 
+            return response
+
+        return jsonify(response ="usuario ya existe", status = 200, code = 1) #<--- la petición esta bien hecha 
+    except Exception as e:
+        print(e)
+
+
+@api.route('/signin/ws', methods = ['POST'])
+def add_ws():
+    try:
+        #objeto json
+        
+        data = request.json
+       
+        #gets email and password
+        email = data["email"]
+        #checking for existing user
+        ws_store = Ws_store.query.filter_by(email_ws_store = email).first()
+   
+    
+        if ws_store is None:
+            request_body = request.json 
+            ws_store = Ws_store(
+            name_ws_store = request_body["first_name"],
+            email_ws_store = request_body["email"],
+            password_ws_store = generate_password_hash(request_body["password"]),
+            address_ws_store = request_body["address"],
+            hours_ws_store = request_body["hours"],
+            scheduling_ws_store = request_body['scheduling'] 
+            )
+            
+        #insert ws_store
+            db.session.add(ws_store)
+            db.session.commit()
+            #return make_response("Done", 200) cambio para conectar con front 
+            response = jsonify(response = "Done", status = 200, code = 0)
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
 
         return jsonify(response ="usuario ya existe", status = 200, code = 1) #<--- la petición esta bien hecha 
     except Exception as e:
         print(e)
+
+
+
 
 @api.route('/login', methods =['POST'])
 def login():
@@ -72,7 +111,7 @@ def login():
 
     if user is None:
         # returns 401 if user does not exist
-        return jsonify({code:3, response: "Usuario no existe"})
+        return jsonify({"code":3, "response": "Usuario no existe"})
     print(user.password)
     if check_password_hash(user.password, auth['password']) == True:
         # generates the JWT Token
@@ -80,7 +119,7 @@ def login():
         print(access_token)
         return jsonify({ "token": access_token, "user_id": user.id })
     # returns 403 if password is wrong
-    return jsonify({code:2 , response: "Usuario o contraseña incorrectos"})
+    return jsonify({"code":2 , "response": "Usuario o contraseña incorrectos"})
 
 #API user GET
 @api.route('/users', methods = ['GET'])
@@ -96,15 +135,6 @@ def id_users(id):
     if users_db is None:
         return "No existe usuario", 404
     return users_db.serialize(), 200
-
-#APi ws_store 
-@api.route('/signin/ws', methods = ['POST'])
-def add_ws():
-    request_body = request.json
-    ws_store_db = Ws_store(request_body["id_ws"], request_body["name_ws_store"], request_body["email_ws_store"], request_body["password_ws_store"], request_body["address_ws_store"], request_body["scheduling_ws_store"])
-    db.session.add(ws_store_db)
-    db.session.commit()
-    return "Done", 200
 
 #API ws_store GET
 @api.route('/ws', methods = ['GET'])

@@ -6,7 +6,7 @@ import React from "react";
 export const Registration = () => {
   const navigate = useNavigate();
 
-  const [mostrarComponente, setMostrarComponente] = useState(true);
+  const [isBike, setIsBike] = useState(true);
   const {
     register,
     handleSubmit,
@@ -14,10 +14,10 @@ export const Registration = () => {
   } = useForm();
 
   const onSubmit = async (dataUser) => {
-    //event.preventDefault();
-    console.log(dataUser);
+    const route = isBike? "users":"ws"
     const response = await fetch(
-      "https://3001-manuelv85-proyectofinal-v7aexyo3isp.ws-us84.gitpod.io/api/signin/users",
+      `https://3001-manuelv85-proyectofinal-v7aexyo3isp.ws-us84.gitpod.io/api/signin/${route}`,
+
       {
         crossDomain: true,
         method: "POST",
@@ -38,14 +38,14 @@ export const Registration = () => {
     <form onSubmit={handleSubmit(onSubmit)} className="contenedor-login">
       <div className="mb-3">
         <button
-          onClick={() => setMostrarComponente(true)}
+          onClick={() => setIsBike(false)}
           type="button"
           className="btn btn-dark"
         >
           Tienda
         </button>
         <button
-          onClick={() => setMostrarComponente(false)}
+          onClick={() => setIsBike(true)}
           type="button"
           className="btn btn-dark"
         >
@@ -133,16 +133,16 @@ export const Registration = () => {
           {...register("address")}
         />
 
-        {mostrarComponente ? (
+        {!isBike ? (
           <>
             <label for="InputHours" className="form-label">
               horario Ej:(8:00 a 17:00)
             </label>
-            <input type="text" className="form-control" id="InputHours" />
+            <input type="text" className="form-control" id="InputHours" {...register("hours")} />
             <label for="InputScheduling" className="form-label">
               dias Ej:(Lun-Mar)
             </label>
-            <input type="text" className="form-control" id="InputScheduling" />
+            <input type="text" className="form-control" id="InputScheduling" {...register("scheduling")} />
           </>
         ) : (
           <></>

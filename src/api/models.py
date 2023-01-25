@@ -2,24 +2,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-"""
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
-    is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    def __repr__(self):
-        return f'<User {self.email}>'
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            # do not serialize the password, its a security breach
-        }
-"""
-
-
-
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
@@ -58,26 +40,28 @@ class Ws_store(db.Model):
     email_ws_store = db.Column(db.String(250), nullable = False)
     password_ws_store = db.Column(db.String(250), nullable = False)
     address_ws_store = db.Column(db.String(250), nullable = False)
+    hours_ws_store = db.Column(db.String(250), nullable = True)
     scheduling_ws_store = db.Column(db.String(250), nullable = False)
 
-def serialize (self):
-    return {
-        "id_ws": self.id_ws,
-        "name_ws_store" : self.name_ws_store,
-        "email_ws_store": self.email_ws_store,
-        "address_ws_store": self.addres_ws_store,
-        "scheduling_ws_store": self.scheduling_ws_store
-    }
-def __init__(self, id_ws, name_ws_store, email_ws_store, passwor_ws_store, address_ws_store, scheduling_ws_store):
-    self.id_ws = id_ws
-    self.name_ws_store = name_ws_store
-    self.email_ws_store = email_ws_store
-    self.password_ws_store = password_ws_store
-    self.address_ws_store = address_ws_store
-    self.scheduling_ws_store = scheduling_ws_store
+    def serialize (self):
+        return {
+            "id_ws": self.id_ws,
+            "name_ws_store" : self.name_ws_store,
+            "email_ws_store": self.email_ws_store,
+            "address_ws_store": self.address_ws_store,
+            "hours_ws_store": self.hours_ws_store,
+            "scheduling_ws_store": self.scheduling_ws_store
+        }
+    def __init__(self, name_ws_store, email_ws_store, password_ws_store, address_ws_store, hours_ws_store, scheduling_ws_store):
+        self.name_ws_store = name_ws_store
+        self.email_ws_store = email_ws_store
+        self.password_ws_store = password_ws_store
+        self.address_ws_store = address_ws_store
+        self.hours_ws_store = hours_ws_store
+        self.scheduling_ws_store = scheduling_ws_store
 
-def __repr__(self):
-    return f"{self.id_ws}{self.name_ws_store}: {self.email_ws_store}: {self.passwor_ws_store}: {self.address_ws_store}: {self.scheduling_ws_store}"
+    def __repr__(self):
+        return f"{self.name_ws_store}: {self.email_ws_store}: {self.passwor_ws_store}: {self.address_ws_store}:{self.hours_ws_store}: {self.scheduling_ws_store}"
 
 
 
