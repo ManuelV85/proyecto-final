@@ -72,11 +72,7 @@ def login():
 
     if user is None:
         # returns 401 if user does not exist
-        return make_response(
-            'El usuario no existe',
-            200, #no es una petición mal hecha 
-            {'WWW-Authenticate' : 'Basic realm ="Wrong User or Password !!"'}
-        )
+        return jsonify({code:3, response: "Usuario no existe"})
     print(user.password)
     if check_password_hash(user.password, auth['password']) == True:
         # generates the JWT Token
@@ -84,11 +80,7 @@ def login():
         print(access_token)
         return jsonify({ "token": access_token, "user_id": user.id })
     # returns 403 if password is wrong
-    return make_response(
-        'Could not verify',
-        403,
-        {'WWW-Authenticate' : 'Basic realm ="Wrong User or Password !!"'}
-    )
+    return jsonify({code:2 , response: "Usuario o contraseña incorrectos"})
 
 #API user GET
 @api.route('/users', methods = ['GET'])
