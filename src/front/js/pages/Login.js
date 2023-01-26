@@ -16,8 +16,23 @@ export const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (evento) => {
-    console.log(evento);
+  const onSubmit = async (dataUser) => {
+    const response = await fetch(
+      "https://3001-manuelv85-proyectofinal-v7aexyo3isp.ws-us84.gitpod.io/api/login",
+      {
+        crossDomain: true,
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(dataUser),
+      }
+    ).then((response) => response.json());
+    if (response["code"] >= 2) {
+      alert(response["response"]);
+    } else alert("bienvenido");
   };
 
   return (
@@ -26,14 +41,14 @@ export const Login = () => {
         <Logo />
       </div>
       <div className="mb-3">
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputEmail" className="form-label">
           E-mail{" "}
         </label>
         <input
           name="email"
           type="text"
           className="form-control"
-          id="exampleInputEmail1"
+          id="InputEmail"
           aria-describedby="emailHelp"
           placeholder="ingrese Email"
           {...register("email", {
@@ -52,14 +67,14 @@ export const Login = () => {
         </di>
       </div>
       <div class="mb-3">
-        <label for="exampleInputPassword1" className="form-label">
+        <label for="InputPassword" className="form-label">
           Contraseña
         </label>
         <input
           type="password"
           name="password"
           className="form-control"
-          id="exampleInputPassword1"
+          id="InputPassword"
           placeholder="ingrese contraseña"
           {...register("password", {
             required: {
