@@ -18,6 +18,7 @@ import Listadetareas from "./pages/listatareas";
 import { Tableinventary } from "./pages/tablaInventary";
 import { Emailpassword } from "./pages/email.password";
 
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
