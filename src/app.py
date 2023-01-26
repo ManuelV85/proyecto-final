@@ -33,6 +33,7 @@ db.init_app(app)
 
 # Allow CORS requests to this API
 CORS(app)
+CORS(api)
 
 # add the admin
 setup_admin(app)

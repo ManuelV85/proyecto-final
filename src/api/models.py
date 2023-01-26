@@ -93,9 +93,10 @@ class Inventory(db.Model):
     def __init__(self, category, product, picture, description, price, user_id):
         self.category = category
         self.product = product
+        self.picture = picture
         self.description = description
         self.price = price 
         self.user_id = user_id
 
     def __repr__(self):
-        return f"{self.category}: {self.product}: {self.description}: {self.price}: {self.user_id}"  
+        return f"{self.category}: {self.product}:{self.picture} :{self.description}: {self.price}: {self.user_id}"  

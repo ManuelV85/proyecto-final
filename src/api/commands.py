@@ -39,14 +39,8 @@ def setup_commands(app):
     def insert_test_inventory(count):
         print("creating test inventory")
         for i in range(1, int(count) + 1):
-            inventory = Inventory()
-            inventory.id_item = i
-            inventory.category = "test inventory" + " " + str(i)
-            inventory.product = "test product" + " " + str(i)
-            inventory.description = "test description" + " " + str(i)
-            inventory.picture = "test picture" + " " + str(i)
-            inventory.price = i
-            inventory.user_id = 1
+            inventory = Inventory("test inventory" + " " + str(i), "test product" + " " + str(i),\
+               "test picture" + " " + str(i), "test description" + " " + str(i), i, 1 )
             db.session.add(inventory)
             db.session.commit()
         print(" all test inventory created")
@@ -59,7 +53,7 @@ def setup_commands(app):
         for l in range(1, int(count) + 1):
             ws_store = Ws_store("test name" + " " + str(l),
                "test email" + " " + str(l), "test password" + " " + str(l),
-                "test address" + " " + str(l), "test scheduling" + " " + str(l))
+                "test address" + " " + str(l), "hours" + " " + str(l), "test scheduling" + " " + str(l))
            
             db.session.add(ws_store)
             db.session.commit()
