@@ -14,9 +14,9 @@ export const Registration = () => {
   } = useForm();
 
   const onSubmit = async (dataUser) => {
-    const route = isBike? "users":"ws"
+    const route = isBike ? "users" : "ws";
     const response = await fetch(
-      `https://3001-manuelv85-proyectofinal-v7aexyo3isp.ws-us84.gitpod.io/api/signin/${route}`,
+      `https://3001-manuelv85-proyectofinal-sqs888u8aq9.ws-us84.gitpod.io/api/signin/${route}`,
 
       {
         crossDomain: true,
@@ -62,17 +62,21 @@ export const Registration = () => {
           id="InputName"
           {...register("first_name")}
         />
-
-        <label for="InputLastName" className="form-label">
-          Apellido
-        </label>
-        <input
-          type="text"
-          className="form-control"
-          id="InputLastName"
-          {...register("last_name")}
-        />
-
+        {isBike ? (
+          <>
+            <label for="InputLastName" className="form-label">
+              Apellido
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="InputLastName"
+              {...register("last_name")}
+            />
+          </>
+        ) : (
+          <></>
+        )}
         <label for="exampleInputEmail" className="form-label">
           E-mail{" "}
         </label>
@@ -138,11 +142,21 @@ export const Registration = () => {
             <label for="InputHours" className="form-label">
               horario Ej:(8:00 a 17:00)
             </label>
-            <input type="text" className="form-control" id="InputHours" {...register("hours")} />
+            <input
+              type="text"
+              className="form-control"
+              id="InputHours"
+              {...register("hours")}
+            />
             <label for="InputScheduling" className="form-label">
               dias Ej:(Lun-Mar)
             </label>
-            <input type="text" className="form-control" id="InputScheduling" {...register("scheduling")} />
+            <input
+              type="text"
+              className="form-control"
+              id="InputScheduling"
+              {...register("scheduling")}
+            />
           </>
         ) : (
           <></>

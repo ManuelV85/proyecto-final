@@ -8,7 +8,7 @@
       "port": 5432,
       "askForPassword": true,
       "driver": "PostgreSQL",
-      "name": "tabla de usuarios",
+      "name": "table_users",
       "connectString": "postgres://gitpod@localhost:5432/example"
     }
   ]
