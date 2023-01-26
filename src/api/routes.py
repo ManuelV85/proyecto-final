@@ -7,6 +7,7 @@ from api.utils import generate_sitemap, APIException
 import uuid
 from  werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required
+from cloudinary.uploader import upload
 
 api = Blueprint('api', __name__)
 
@@ -123,6 +124,7 @@ def login():
 
 #API user GET
 @api.route('/users', methods = ['GET'])
+@jwt_required()
 def all_users():
     users_db = User.query.all()
     users_db = list(map(lambda user:user.serialize(), users_db))
@@ -147,18 +149,22 @@ def all_ws():
 #API INVENTORY POST
 @api.route('/users/inventory', methods = ['POST'])
 def inventory_user():
-    request_body = request.json
-
-   # print(request_body["user_id"])
-   # user = User.query.get(request_body["user_id"])
-    #if not user: 
-    #    return "usuario no existe", 404
-    #image_binary = get(request_body[picture]).content
-    #print(image_binary)
+    data = request.form
+    image = request.files
+    print(data)
+    print(request.files)
+    user = User.query.get(data.get("user_id"))
+    if not user: 
+        return "usuario no existe", 404
+     
     #with store_context(store):
-     #   inventory.picture.from_blob(image_binary)
-    inventory = Inventory ( request_body["category"], request_body["product"], request_body["description"], request_body["price"], request_body["user_id"])    
-    return "Done", 200
+        
+    inventory = Inventory (data.get("category"), data.get("product"), "a", data.get("description"), data.get("price"),data.get("user_id"))
+    upload(request.files["picture"], public_id="iProBikePicture")
+    db.session.add(inventory)
+    db.session.commit()
+       
+    return jsonify(response= "Done" , status = 200, code = 1 )
 
 #API inventory get
 @api.route('/inventory', methods = ['GET'])
