@@ -84,7 +84,7 @@ def add_ws():
             db.session.add(ws_store)
             db.session.commit()
             #return make_response("Done", 200) cambio para conectar con front 
-            response = jsonify(response = "Done", status = 200, code = 0)
+            response = jsonify(response = "Se creo usuario exitosamente", status = 200, code = 0)
             response.headers.add('Access-Control-Allow-Origin', '*')
             return response
 
