@@ -93,8 +93,8 @@ export const Login = () => {
       </div>
 
       <div class="mb-3 ">
-        <button type="submit" value="submit" className="btn btn-dark">
-          {/* onClick={() => navigate("/Biker")}  */}
+        <button type="submit" value="submit" className="btn btn-dark"
+           onClick={() => navigate("/Biker")}  >
           Entrar Biker
         </button>
         <button

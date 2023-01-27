@@ -91,10 +91,7 @@ export const Upload_item = () => {
           ></textarea>
         </div>
         <div className="cargar-imagen">
-          <img
-            src="https://cdn.pixabay.com/photo/2020/11/06/16/04/bike-5718217_960_720.jpg"
-            width="200px"
-          ></img>
+          
         </div>
 
         <input

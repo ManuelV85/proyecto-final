@@ -39,7 +39,7 @@ export const Emailpassword = () => {
       </div>
 
       <div class="mb-3 ">
-        <button type="submit" value="submit" className="btn btn-dark">
+        <button type="submit" value="submit" className="btn btn-dark" onClick={() => alert("proximamente")}>
           Enviar E-mail
         </button>
       </div>
