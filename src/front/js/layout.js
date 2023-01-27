@@ -17,6 +17,7 @@ import { Upload_item } from "./pages/Upload";
 import Listadetareas from "./pages/listatareas";
 import { Tableinventary } from "./pages/tablaInventary";
 import { Emailpassword } from "./pages/email.password";
+import { Horario } from "./pages/horario";
 
 //create your first component
 const Layout = () => {
@@ -39,6 +40,7 @@ const Layout = () => {
             <Route element={<Tableinventary />} path="/tableinventary" />
             <Route element={<Emailpassword />} path="/emailpassword" />
             <Route element={<Sos/>} path="/sos" />
+            <Route element={<Horario/>} path="/horario" />
           </Routes>
         </BrowserRouter>
       </div>

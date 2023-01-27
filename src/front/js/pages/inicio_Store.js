@@ -31,7 +31,7 @@ export const MenuStore = () => {
         </button>
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/horario")}
           type="submit"
           className="btn btn-dark"
         >

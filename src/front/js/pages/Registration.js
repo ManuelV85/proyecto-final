@@ -104,7 +104,7 @@ export const Registration = () => {
           Contraseña
         </label>
         <input
-          type="text"
+          type="password"
           className="form-control"
           id="InputPassword"
           {...register("password", {
@@ -125,7 +125,7 @@ export const Registration = () => {
         <label for="InputRepeatPassword" className="form-label">
           Repita contraseña
         </label>
-        <input type="text" className="form-control" id="InputRepeatPassword" />
+        <input type="password" className="form-control" id="InputRepeatPassword" />
 
         <label for="InputAddress" className="form-label">
           Direccion
