@@ -54,7 +54,7 @@ h1 {
   background-color: rgb(90, 246, 0);
   color: black;
   box-shadow: 0 0 10px 10px rgba(122, 222, 21, 0.882);
-  margin-top: 10px;
+  /*margin-top: 10px;*/
 }
 .fa-solid fa-cart-shopping {
   font-size: 30px;
@@ -161,7 +161,6 @@ option {
 }
 
 #my-button {
-  
   width: 250px;
   font-size: 20px;
   margin-bottom: 30px;
@@ -171,10 +170,10 @@ option {
   
 }
 
-.btn-dark{
+.btn-dark {
   margin-top: 20px;
 }
 
-.contenidohorario{
+.contenidohorario {
   background-color: rgba(10, 115, 15, 0.597);
 }

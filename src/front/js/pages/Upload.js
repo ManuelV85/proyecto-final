@@ -10,27 +10,27 @@ export const Upload_item = () => {
 
   const onSubmit = async (dataUser) => {
     var data = new FormData();
-    console.log(dataUser["picture"] [0])
+    console.log(dataUser["picture"][0]);
     data.append("category", dataUser["category"]);
     data.append("product", dataUser["product"]);
     data.append("price", dataUser["price"]);
     data.append("description", dataUser["description"]);
-    data.append("picture", dataUser["picture"] [0]);
+    data.append("picture", dataUser["picture"][0]);
     data.append("user_id", 1);
-    console.log(data)
+    console.log(data);
     for (var pair of data.entries()) {
       console.log(pair[0] + ", " + pair[1]);
     }
 
-        const response = await fetch(
-      `https://3001-manuelv85-proyectofinal-sqs888u8aq9.ws-us84.gitpod.io/api/users/inventory`,
+    const response = await fetch(
+      `https://3001-manuelv85-proyectofinal-mqix53vw88a.ws-us84.gitpod.io/api/users/inventory`,
 
       {
         crossDomain: true,
         method: "POST",
         mode: "cors",
-       // headers: {
-         // "Content-Type": "multipart/form-data", //permite subir no solo json
+        // headers: {
+        // "Content-Type": "multipart/form-data", //permite subir no solo json
         //},
         referrerPolicy: "no-referrer",
         body: data,
@@ -39,10 +39,14 @@ export const Upload_item = () => {
     if (response["code"] == 1) {
       alert(response["response"]);
     } else if (response["code"] == 0) alert(response["response"]);
-   };
+  };
 
   return (
-    <form enctype="multipart/form-data" onSubmit={handleSubmit(onSubmit)} className="contenedor-login">
+    <form
+      enctype="multipart/form-data"
+      onSubmit={handleSubmit(onSubmit)}
+      className="contenedor-login"
+    >
       <div className="mb-3">
         <select
           class="form-select"
@@ -90,9 +94,7 @@ export const Upload_item = () => {
             rows="2"
           ></textarea>
         </div>
-        <div className="cargar-imagen">
-          
-        </div>
+        <div className="cargar-imagen"></div>
 
         <input
           type="file"
@@ -100,8 +102,12 @@ export const Upload_item = () => {
           name=""
           {...register("picture")}
           accept="image/png,image/jpg"
-        ></input>
-        <button type="submit" className="btn btn-dark">
+         ></input>
+        <button
+          type="submit"
+          className="btn btn-dark"
+          onClick={() => navigate("/menustore")}
+        >
           Guardar
         </button>
       </div>

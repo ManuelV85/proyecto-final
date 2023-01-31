@@ -16,7 +16,7 @@ export const Registration = () => {
   const onSubmit = async (dataUser) => {
     const route = isBike ? "users" : "ws";
     const response = await fetch(
-      `https://3001-manuelv85-proyectofinal-sqs888u8aq9.ws-us84.gitpod.io/api/signin/${route}`,
+      `https://3001-manuelv85-proyectofinal-mqix53vw88a.ws-us84.gitpod.io/api/signin/${route}`,
 
       {
         crossDomain: true,
@@ -31,8 +31,7 @@ export const Registration = () => {
     ).then((response) => response.json());
     if (response["code"] == 1) {
       alert(response["response"]);
-    } else if (response["code"] == 0) alert(response["response"]);
-  };
+    } else if (response["code"] == 0) alert(response["response"]);  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contenedor-login">
@@ -125,7 +124,11 @@ export const Registration = () => {
         <label for="InputRepeatPassword" className="form-label">
           Repita contraseña
         </label>
-        <input type="password" className="form-control" id="InputRepeatPassword" />
+        <input
+          type="password"
+          className="form-control"
+          id="InputRepeatPassword"
+        />
 
         <label for="InputAddress" className="form-label">
           Direccion
@@ -162,7 +165,7 @@ export const Registration = () => {
           <></>
         )}
       </div>
-      <button type="submit" className="btn btn-dark">
+      <button type="submit" className="btn btn-dark" >
         Crear cuenta
       </button>
     </form>

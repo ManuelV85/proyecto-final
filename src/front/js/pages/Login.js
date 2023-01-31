@@ -18,7 +18,7 @@ export const Login = () => {
 
   const onSubmit = async (dataUser) => {
     const response = await fetch(
-      "https://3001-manuelv85-proyectofinal-v7aexyo3isp.ws-us84.gitpod.io/api/login",
+      "https://3001-manuelv85-proyectofinal-mqix53vw88a.ws-us84.gitpod.io/api/login",
       {
         crossDomain: true,
         method: "POST",
@@ -30,9 +30,17 @@ export const Login = () => {
         body: JSON.stringify(dataUser),
       }
     ).then((response) => response.json());
+
     if (response["code"] >= 2) {
       alert(response["response"]);
-    } else alert("bienvenido");
+    } else {
+      const isBike = response["type"] == "user" ? true : false;
+      if (isBike) {
+        navigate("/biker");
+      } else {
+        navigate("/menustore");
+      }
+    }
   };
 
   return (
@@ -93,17 +101,10 @@ export const Login = () => {
       </div>
 
       <div class="mb-3 ">
-        <button type="submit" value="submit" className="btn btn-dark"
-           onClick={() => navigate("/Biker")}  >
-          Entrar Biker
+        <button type="submit" value="submit" className="btn btn-dark">
+          Entrar
         </button>
-        <button
-          onClick={() => navigate("/menustore")}
-          type="submit"
-          className="btn btn-dark"
-        >
-          Entrar Store
-        </button>
+
         <button
           onClick={() => navigate("/Emailpassword")}
           type="submit"

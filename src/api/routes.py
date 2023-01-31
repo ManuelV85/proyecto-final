@@ -1,6 +1,3 @@
-"""
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
-"""
 from flask import Flask, request, jsonify, url_for, Blueprint, make_response
 from api.models import db, User, Inventory, Ws_store
 from api.utils import generate_sitemap, APIException
@@ -11,22 +8,15 @@ from cloudinary.uploader import upload
 
 api = Blueprint('api', __name__)
 
-"""
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-    return jsonify(response_body), 200
-    """
 #sigin users
 @api.route('/signin/users', methods = ['POST'])
 def add_user():
     try:
         #objeto json
-        print(request.json)
+        
         data = request.json
         print(data)
+
         #gets email and password
         email = data["email"]
         #checking for existing user
@@ -51,7 +41,7 @@ def add_user():
             response.headers.add('Access-Control-Allow-Origin', '*') #<--- preguntar 
             return response
 
-        return jsonify(response ="usuario ya existe", status = 200, code = 1) #<--- la petición esta bien hecha 
+        return jsonify(response ="usuario ya existe", status = 200, code = 1)
     except Exception as e:
         print(e)
 
@@ -59,12 +49,12 @@ def add_user():
 @api.route('/signin/ws', methods = ['POST'])
 def add_ws():
     try:
-        #objeto json
-        
+        #objeto json        
         data = request.json
        
         #gets email and password
         email = data["email"]
+
         #checking for existing user
         ws_store = Ws_store.query.filter_by(email_ws_store = email).first()
    
@@ -99,7 +89,8 @@ def add_ws():
 def login():
     # creates dictionary of form data
     auth = request.json
-
+    ws = None
+    user = None
     if not auth or not auth['email'] or not auth['password']:
         # returns 401 if any email or / and password is missing
         return make_response(
@@ -107,20 +98,37 @@ def login():
             401,
             {'WWW-Authenticate' : 'Basic realm ="Login required !!"'}
             )
-
+    
     user = User.query.filter_by(email = auth['email']).first()
-
     if user is None:
+        ws = Ws_store.query.filter_by(email_ws_store = auth['email']).first()
+     
+
+    if user is None and ws is None:
         # returns 401 if user does not exist
         return jsonify({"code":3, "response": "Usuario no existe"})
-    print(user.password)
-    if check_password_hash(user.password, auth['password']) == True:
-        # generates the JWT Token
-        access_token = create_access_token(identity=user.id)
-        print(access_token)
-        return jsonify({ "token": access_token, "user_id": user.id })
-    # returns 403 if password is wrong
-    return jsonify({"code":2 , "response": "Usuario o contraseña incorrectos"})
+
+    if user is not None:
+
+        if check_password_hash(user.password, auth['password']) == True:
+            # generates the JWT Token
+
+            access_token = create_access_token(identity=user.id)
+            print(access_token)
+            return jsonify({ "token": access_token, "user_id": user.id, "type":"user" })
+        # returns 403 if password is wrong
+        return jsonify({"code":2 , "response": "Usuario o contraseña incorrectos"})
+    
+    elif ws is not None: 
+        if check_password_hash(ws.password_ws_store, auth['password']) == True:
+            # generates the JWT Token
+            id = ws.id_ws
+            access_token = create_access_token(identity=id)
+            print(access_token)
+            return jsonify({ "token": access_token, "ws_id": ws.id_ws, "type":"ws" })
+        # returns 403 if password is wrong
+        return jsonify({"code":2 , "response": "Usuario o contraseña incorrectos"})
+
 
 #API user GET
 @api.route('/users', methods = ['GET'])
@@ -160,7 +168,7 @@ def inventory_user():
     #with store_context(store):
         
     inventory = Inventory (data.get("category"), data.get("product"), "a", data.get("description"), data.get("price"),data.get("user_id"))
-    upload(request.files["picture"], public_id="iProBikePicture")
+    upload(request.files["picture"], public_id= data.get("product")+ "_" + data.get("category"))
     db.session.add(inventory)
     db.session.commit()
        
