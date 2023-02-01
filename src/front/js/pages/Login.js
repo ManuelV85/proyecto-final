@@ -38,7 +38,9 @@ export const Login = () => {
     } else {
       store.user = {type:response["type"], id: response["id"], token: response["token"]}
       localStorage.setItem("iProBike-token", store.user.token)
-      loca
+      localStorage.setItem("iProBike-type", store.user.type)
+
+      
       console.log(store.user) //<-- comprobar datos
       const isBike = response["type"] == "user" ? true : false;
       if (isBike) {
