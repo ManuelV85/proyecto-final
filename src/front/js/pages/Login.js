@@ -1,14 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
-import React from "react";
-import { useState } from "react";
+import  React, {useContext, useState} from 'react'
 import { useForm } from "react-hook-form";
+import {Context} from '../store/appContext'
+
 
 export const Login = () => {
   const navigate = useNavigate();
   const [mostrarComponente, setMostrarComponente] = useState(false);
   const [mostrarrComponente, setMostrarrComponente] = useState(true);
   const [recuperate, setRecuperateComponente] = useState(false);
+  const {store} = useContext(Context)
 
   const {
     register,
@@ -34,6 +36,9 @@ export const Login = () => {
     if (response["code"] >= 2) {
       alert(response["response"]);
     } else {
+      store.user = {type:response["type"], id: response["id"], token: response["token"]}
+      localStorage.setItem("iProBike-token", store.user.token)
+      console.log(store.user) //<-- comprobar datos
       const isBike = response["type"] == "user" ? true : false;
       if (isBike) {
         navigate("/biker");

@@ -98,10 +98,10 @@ def login():
             401,
             {'WWW-Authenticate' : 'Basic realm ="Login required !!"'}
             )
-    
     user = User.query.filter_by(email = auth['email']).first()
     if user is None:
-        ws = Ws_store.query.filter_by(email_ws_store = auth['email']).first()
+        ws = Ws_store.query.filter_by(email_ws_store = auth['email']).first(
+    )
      
 
     if user is None and ws is None:
@@ -115,7 +115,7 @@ def login():
 
             access_token = create_access_token(identity=user.id)
             print(access_token)
-            return jsonify({ "token": access_token, "user_id": user.id, "type":"user" })
+            return jsonify({ "token": access_token, "id": user.id, "type":"user" })
         # returns 403 if password is wrong
         return jsonify({"code":2 , "response": "Usuario o contraseña incorrectos"})
     
@@ -125,7 +125,7 @@ def login():
             id = ws.id_ws
             access_token = create_access_token(identity=id)
             print(access_token)
-            return jsonify({ "token": access_token, "ws_id": ws.id_ws, "type":"ws" })
+            return jsonify({ "token": access_token, "id": ws.id_ws, "type":"ws" })
         # returns 403 if password is wrong
         return jsonify({"code":2 , "response": "Usuario o contraseña incorrectos"})
 
