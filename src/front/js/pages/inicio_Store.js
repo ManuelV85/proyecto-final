@@ -11,7 +11,7 @@ export const MenuStore = () => {
   if (isExpired) {
     navigate("/login");
   } else if (!isExpired && typeW == "user") {
-    navigate("/login");
+    navigate("/page404");
   }
 
   return (

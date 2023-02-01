@@ -1,17 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { Logo } from "../component/Logo";
-import {useJwt} from "react-jwt"
+import { useJwt } from "react-jwt";
 
 export const Biker = () => {
-  const userToken = localStorage.getItem("iProBike-token")
-  const {token, isExpired} = useJwt(userToken)
+  const userToken = localStorage.getItem("iProBike-token");
+  const { token, isExpired } = useJwt(userToken);
   const navigate = useNavigate();
-  const typeB = localStorage.getItem("iProBike-type")
-  if (isExpired){
-    navigate("/login")
-  } else if (!isExpired && typeB == "ws"){
-    navigate("/login")
+  const typeB = localStorage.getItem("iProBike-type");
+  if (isExpired) {
+    navigate("/login");
+  } else if (!isExpired && typeB == "ws") {
+    navigate("/page404");
   }
 
   return (

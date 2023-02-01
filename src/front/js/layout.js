@@ -42,6 +42,7 @@ const Layout = () => {
             <Route element={<Emailpassword />} path="/emailpassword" />
             <Route element={<Sos/>} path="/sos" />
             <Route element={<Horario/>} path="/horario" />
+            <Route element={<Page404/>} path="/page404" />
             
           </Routes>
         </BrowserRouter>

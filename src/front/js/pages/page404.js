@@ -4,7 +4,7 @@ import { Logo } from "../component/Logo";
 
 
 
-export const Pages404 = () => {
+export const Page404 = () => {
   const navigate = useNavigate();
 
   return (
