@@ -1,45 +1,75 @@
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
 import React, { useState } from "react";
+import { useRef } from "react";
+import emailjs from "@emailjs/browser";
 
-const Categorias=[
+const Categorias = [
   {
-    "nombre" :"Todos los productos",
-    "articulos" :["frenos","manubrio","parches","cadenas","neumaticos","sillin","casco","puño","punteras"],
+    nombre: "Todos los productos",
+    articulos: [
+      "frenos",
+      "manubrio",
+      "parches",
+      "cadenas",
+      "neumaticos",
+      "sillin",
+      "casco",
+      "puño",
+      "punteras",
+    ],
   },
   {
-    "nombre" :"repuestos",
-    "articulos" :["frenos","manubrio","parches","cadenas","neumaticos"],
+    nombre: "repuestos",
+    articulos: ["frenos", "manubrio", "parches", "cadenas", "neumaticos"],
   },
   {
-    "nombre" : "accesorios",
-    "articulos" : ["sillin","casco","puño","punteras"],
-    
+    nombre: "accesorios",
+    articulos: ["sillin", "casco", "puño", "punteras"],
   },
   {
-    "nombre" : "suplementos",
-    "articulos" : ["creatina","proteinas","aminoacidos","barras energeticas"],
-    
+    nombre: "suplementos",
+    articulos: ["creatina", "proteinas", "aminoacidos", "barras energeticas"],
   },
-]
-
+];
 
 export const UserStore = () => {
   const navigate = useNavigate();
 
-  const[idArticulos,setIdArticulos]=useState(-1);
- 
- const handlerCargarArticulos=function(e){
-  const opcion = e.target.value;
-  console.log(opcion);
+  const form = useRef();
 
-  setIdArticulos(opcion);
+  const sendEmail = (e) => {
+    e.preventDefault();
 
- }
+    emailjs
+      .sendForm(
+        "service_uiz090m",
+        "template_kjnrngs",
+        form.current,
+        "RFjylzfzoYSVtr24B"
+      )
+      .then(
+        (result) => {
+          console.log(result.text);
+        },
+        (error) => {
+          console.log(error.text);
+        }
+      );
+  };
 
+  const [idArticulos, setIdArticulos] = useState(-1);
 
+  const handlerCargarArticulos = function (e) {
+    const opcion = e.target.value;
+    
+
+    setIdArticulos(opcion);
+  };
+
+  
   return (
-    <form className="contenedor-login">
+    <form ref={form} onSubmit={sendEmail} className="contenedor-login">
       <div className="mb-3">
         <div className="nombre-tienda">
           <Logo />
@@ -54,28 +84,41 @@ export const UserStore = () => {
           </button>
         </div>
 
-        <select name= "categorias" id="selCategoria" onClick={handlerCargarArticulos} className="form-select" aria-label="Default select example">
-          <option value={-1} selected>Categoria</option>
-         {
-          Categorias.map((item,i)=>(
-            <option key={"categoria" + i} value={i}>{item.nombre}</option>
-          ))
-         }
+        <select
+          name="categorias"
+          id="selCategoria"
+          onClick={handlerCargarArticulos}
+          className="form-select"
+          aria-label="Default select example"
+        >
+          <option value={-1} selected>
+            Categoria
+          </option>
+          {Categorias.map((item, i) => (
+            <option key={"categoria" + i} value={i}>
+              {item.nombre}
+            </option>
+          ))}
         </select>
 
-        <select name ="articulos" id="selarticulos" className="form-select" aria-label="Default select example">
-          <option value ={-1} selected>Productos</option>
-          {
-            idArticulos> -1 &&
-            (
-              Categorias[idArticulos].articulos.map((item,i)=>(
-                <option key={"articulo"+i} value="">{item}</option>
-              ))
-            )
-          }
+        <select
+          name="articulos"
+          id="selarticulos"
+          className="form-select"
+          aria-label="Default select example"
+        >
+          <option value={-1} selected>
+            Productos
+          </option>
+          {idArticulos > -1 &&
+            Categorias[idArticulos].articulos.map((item, i) => (
+              <option key={"articulo" + i} value="">
+                {item}
+              </option>
+            ))}
         </select>
-
         
+
         <div
           id="carouselExampleControlsNoTouching"
           class="carousel slide"
@@ -83,19 +126,34 @@ export const UserStore = () => {
         >
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <div  className="card-producto">
-                 <img
+              <div className="card-producto">
+                <img
                   src="https://cdn.pixabay.com/photo/2016/11/19/12/24/bicycle-1839005_960_720.jpg"
                   className="card-img-top"
                   alt="..."
                 ></img>
-                <p>
-                  Bicicleta de velocidad
-                </p>
-                <p>
-                  Precio:$1.200.900
-                </p>
+                <input
+                  className="form-control"
+                  name="user_producto"
+                  value="Bicicleta de velocidad"
+                />
+
+                <input
+                  className="form-control"
+                  name="user_precio"
+                  value="precio:$1.200.000"
+                />
               </div>
+              <input
+                className="form-control"
+                type="email"
+                name="user_email"
+                placeholder="Ingrese Email"
+              />
+
+              <button type="submit" className="btn btn-dark" value="Send">
+                enviar orden de compra
+              </button>
             </div>
             <div class="carousel-item">
               <div className="card-producto">
@@ -104,30 +162,30 @@ export const UserStore = () => {
                   className="card-img-top"
                   alt="..."
                 ></img>
-                <p>
-                  casco amateur
-                </p>
-                <p>
-                  Precio:$16.800
-                </p>
+                <input
+                  className="form-control"
+                  name="user_producto"
+                  value="casco amateur"
+                />
+
+                <input
+                  className="form-control"
+                  name="user_precio"
+                  value="precio:$16.800"
+                />
               </div>
+              <input
+                className="form-control"
+                type="email"
+                name="user_email"
+                placeholder="Ingrese Email"
+              />
+
+              <button type="submit" className="btn btn-dark" value="Send">
+                enviar orden de compra
+              </button>
             </div>
-            <div class="carousel-item">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2020/01/16/06/24/activity-4769731_960_720.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-              <p>
-                  casco profesional
-                </p>
-                <p>
-                  Precio:$36.800
-                </p>
-                
-              </div>
-            </div>
+
             <div class="carousel-item">
               <div className="card-producto">
                 <img
@@ -135,14 +193,28 @@ export const UserStore = () => {
                   className="card-img-top"
                   alt="..."
                 ></img>
-              <p>
-                  aminoacidos
-                </p>
-                <p>
-                  Precio:$8.800
-                </p>
-                
+                <input
+                  className="form-control"
+                  name="user_producto"
+                  value="aminoacido"
+                />
+
+                <input
+                  className="form-control"
+                  name="user_precio"
+                  value="precio:$8.800"
+                />
               </div>
+              <input
+                className="form-control"
+                type="email"
+                name="user_email"
+                placeholder="Ingrese Email"
+              />
+
+              <button type="submit" className="btn btn-dark" value="Send">
+                enviar orden de compra
+              </button>
             </div>
             <div class="carousel-item">
               <div className="card-producto">
@@ -151,14 +223,30 @@ export const UserStore = () => {
                   className="card-img-top"
                   alt="..."
                 ></img>
-              <p>
-                  barra proteian
-                </p>
-                <p>
-                  Precio:$6.800
-                </p>
-                
+                <input
+                  className="form-control"
+                  type="producto"
+                  name="user_producto"
+                  value="proteina"
+                />
+
+                <input
+                  className="form-control"
+                  type="precio"
+                  name="user_precio"
+                  value="Precio:$6.800"
+                />
               </div>
+              <input
+                className="form-control"
+                type="email"
+                name="user_email"
+                placeholder="Ingrese Email"
+              />
+
+              <button type="submit" className="btn btn-dark" value="Send">
+                enviar orden de compra
+              </button>
             </div>
           </div>
           <button
@@ -180,14 +268,6 @@ export const UserStore = () => {
             <span class="visually-hidden">Next</span>
           </button>
         </div>
-
-        <button
-          onClick={() => alert("proximamente")}
-          type="submit"
-          className="btn btn-dark"
-        >
-          Agregar al carro
-        </button>
       </div>
     </form>
   );

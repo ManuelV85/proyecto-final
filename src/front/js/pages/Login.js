@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
+
 import { Logo } from "../component/Logo";
 import React from "react";
 import { useState } from "react";
@@ -9,7 +10,9 @@ export const Login = () => {
   const [mostrarComponente, setMostrarComponente] = useState(false);
   const [mostrarrComponente, setMostrarrComponente] = useState(true);
   const [recuperate, setRecuperateComponente] = useState(false);
-
+  const location=useLocation();
+  const message=location.state.response;
+  console.log(message);
   const {
     register,
     handleSubmit,

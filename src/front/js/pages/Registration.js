@@ -1,10 +1,32 @@
-import { useState } from "react";
+import { useState,useRef} from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { sendEmail } from "../service/emailService";
+
 
 export const Registration = () => {
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [user, setUser] = useState({
+    email: "mail@mail.com",
+    name: "Jhon Doe",
+  });
+
+  const [link, setLink] = useState("www.google.com");
+
+  const verify = (_) => {
+    if (email.localeCompare(user.email) != 0) throw Error("Invalid Email");
+    let params = {
+      to_email: user.email,
+      to_name: user.name,
+      to_link: link,
+    };
+    sendEmail(params);
+  };
+
+  
 
   const [isBike, setIsBike] = useState(true);
   const {
@@ -14,9 +36,10 @@ export const Registration = () => {
   } = useForm();
 
   const onSubmit = async (dataUser) => {
+   
     const route = isBike ? "users" : "ws";
     const response = await fetch(
-      `https://3001-manuelv85-proyectofinal-sqs888u8aq9.ws-us84.gitpod.io/api/signin/${route}`,
+      `https://3001-ovaldes133-proyectofina-ye19cz67sok.ws-us85.gitpod.io/api/signin/${route}`,
 
       {
         crossDomain: true,
@@ -31,7 +54,12 @@ export const Registration = () => {
     ).then((response) => response.json());
     if (response["code"] == 1) {
       alert(response["response"]);
-    } else if (response["code"] == 0) alert(response["response"]);
+    } else if (response["code"] == 0) {
+    
+      
+      sendEmail({to_email:dataUser.email,to_name:dataUser.first_name})
+      navigate("/login",{state:{response:response["response"]}})
+    };
   };
 
   return (
@@ -78,10 +106,14 @@ export const Registration = () => {
           <></>
         )}
         <label for="exampleInputEmail" className="form-label">
-          E-mail{" "}
+          E-mail
         </label>
         <input
-          type="email"
+         title="email"
+         type="email"
+        
+         
+          
           className="form-control"
           id="exampleInputEmail"
           {...register("email")}
@@ -162,7 +194,7 @@ export const Registration = () => {
           <></>
         )}
       </div>
-      <button type="submit" className="btn btn-dark">
+      <button type="submit" className="btn btn-dark" >
         Crear cuenta
       </button>
     </form>
