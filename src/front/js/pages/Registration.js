@@ -10,6 +10,8 @@ export const Registration = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -31,7 +33,8 @@ export const Registration = () => {
     ).then((response) => response.json());
     if (response["code"] == 1) {
       alert(response["response"]);
-    } else if (response["code"] == 0) alert(response["response"]);  };
+    } else if (response["code"] == 0) alert(response["response"]);
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contenedor-login">
@@ -128,7 +131,18 @@ export const Registration = () => {
           type="password"
           className="form-control"
           id="InputRepeatPassword"
+          {...register("password2", {
+            required: {
+              value: true,
+              message: "Necesitas este campo",
+            },
+          })}
         />
+        {watch("password") !== watch("password2") && getValues("password2") ? (
+          <h1 style={{ color: "red", fontSize: "16px" }}>
+            Contraseñas no coinciden
+          </h1>
+        ) : null}
 
         <label for="InputAddress" className="form-label">
           Direccion
@@ -165,7 +179,7 @@ export const Registration = () => {
           <></>
         )}
       </div>
-      <button type="submit" className="btn btn-dark" >
+      <button type="submit" className="btn btn-dark">
         Crear cuenta
       </button>
     </form>

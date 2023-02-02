@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
 import React, { useState } from "react";
 import { items } from "./items.js";
+
 const Categorias = [
   {
     nombre: "Todos los productos",
@@ -38,8 +39,9 @@ export const UserStore = () => {
   const [category, setCategory] = useState("");
   const [itemName, setItemName] = useState("");
   const [selectedProduct, setSelectedProduct] = useState([
-    { img: "", item: "", price: "", id: -1 },
+    { img: "", product: "", name: "", price: "", id: -1 },
   ]);
+
   const handlerCargarArticulos = function (e) {
     const opcion = e.target.value;
     console.log(opcion);
@@ -47,12 +49,12 @@ export const UserStore = () => {
     //setIdArticulos(opcion);
   };
   const handleProduct = (product) => {
-    product.preventDefault();
     setItemName(product.target.value);
-    const products = items.filter((item) => item.item == "freno");
-
-    setSelectedProduct(products);
-    console.log(selectedProduct);
+    console.log("@", selectedProduct);
+    const products = items.filter(
+      (item) => item.product == product.target.value
+    );
+    setSelectedProduct([...products]);
   };
 
   return (
@@ -91,9 +93,10 @@ export const UserStore = () => {
         <select
           name="articulos"
           id="selarticulos"
-          onClick={handleProduct}
+          onChange={handleProduct}
           className="form-select"
           aria-label="Default select example"
+          value={itemName}
         >
           <option value={""} selected>
             Productos
@@ -102,30 +105,39 @@ export const UserStore = () => {
             items
               .filter((item, i) => item.category == category)
               .map((item) => (
-                <option key={"articulo" + item.id} value={item.item}>
-                  {item.item}
+                <option key={"articulo" + item.id} value={item.product}>
+                  {item.product}
                 </option>
               ))}
         </select>
 
-        <div
+                {
+                  selectedProduct.map((p,i) => {
+                    <div className="container">{p.name}</div>
+                  })
+                }
+
+        { /*<div
           id="carouselExampleControlsNoTouching"
-          class="carousel slide"
+          className="carousel slide"
           data-bs-touch="false"
         >
           <div class="carousel-inner">
-            {selectedProduct.map((p) => {
-              <div class="carousel-item active">
+            {selectedProduct.map((p, i) => {
+              {
+                console.log(p);
+              }
+              <div className="carousel-item" key={i} active={i == 0}>
                 <div className="card-producto">
                   <img src={p.img} className="card-img-top" alt="..."></img>
-                  <p>{p.item}</p>
+                  <p>{p.name}</p>
                   <p>{p.price}</p>
                 </div>
               </div>;
             })}
           </div>
           <button
-            class="carousel-control-prev"
+            className="carousel-control-prev"
             type="button"
             data-bs-target="#carouselExampleControlsNoTouching"
             data-bs-slide="prev"
@@ -142,7 +154,7 @@ export const UserStore = () => {
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-        </div>
+          </div>*/}
 
         <button
           onClick={() => alert("proximamente")}
