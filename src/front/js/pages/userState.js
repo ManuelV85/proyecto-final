@@ -1,42 +1,61 @@
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
 import React, { useState } from "react";
+import { items } from "./items.js";
 
-const Categorias=[
+const Categorias = [
   {
-    "nombre" :"Todos los productos",
-    "articulos" :["frenos","manubrio","parches","cadenas","neumaticos","sillin","casco","puño","punteras"],
+    nombre: "Todos los productos",
+    articulos: [
+      "frenos",
+      "manubrio",
+      "parches",
+      "cadenas",
+      "neumaticos",
+      "sillin",
+      "casco",
+      "puño",
+      "punteras",
+    ],
   },
   {
-    "nombre" :"repuestos",
-    "articulos" :["frenos","manubrio","parches","cadenas","neumaticos"],
+    nombre: "repuestos",
+    articulos: ["frenos", "manubrio", "parches", "cadenas", "neumaticos"],
   },
   {
-    "nombre" : "accesorios",
-    "articulos" : ["sillin","casco","puño","punteras"],
-    
+    nombre: "accesorios",
+    articulos: ["sillin", "casco", "puño", "punteras"],
   },
   {
-    "nombre" : "suplementos",
-    "articulos" : ["creatina","proteinas","aminoacidos","barras energeticas"],
-    
+    nombre: "suplementos",
+    articulos: ["creatina", "proteinas", "aminoacidos", "barras energeticas"],
   },
-]
-
+];
 
 export const UserStore = () => {
   const navigate = useNavigate();
 
-  const[idArticulos,setIdArticulos]=useState(-1);
- 
- const handlerCargarArticulos=function(e){
-  const opcion = e.target.value;
-  console.log(opcion);
+  const [idArticulos, setIdArticulos] = useState(-1);
+  const [category, setCategory] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState([
+    { img: "", product: "", name: "", price: "", id: -1 },
+  ]);
 
-  setIdArticulos(opcion);
-
- }
-
+  const handlerCargarArticulos = function (e) {
+    const opcion = e.target.value;
+    console.log(opcion);
+    setCategory(opcion);
+    //setIdArticulos(opcion);
+  };
+  const handleProduct = (product) => {
+    setItemName(product.target.value);
+    console.log("@", selectedProduct);
+    const products = items.filter(
+      (item) => item.product == product.target.value
+    );
+    setSelectedProduct([...products]);
+  };
 
   return (
     <form className="contenedor-login">
@@ -54,115 +73,71 @@ export const UserStore = () => {
           </button>
         </div>
 
-        <select name= "categorias" id="selCategoria" onClick={handlerCargarArticulos} className="form-select" aria-label="Default select example">
-          <option value={-1} selected>Categoria</option>
-         {
-          Categorias.map((item,i)=>(
-            <option key={"categoria" + i} value={i}>{item.nombre}</option>
-          ))
-         }
+        <select
+          name="categorias"
+          id="selCategoria"
+          onClick={handlerCargarArticulos}
+          className="form-select"
+          aria-label="Default select example"
+        >
+          <option value={""} selected>
+            Categoria
+          </option>
+          {Categorias.map((item, i) => (
+            <option key={"categoria" + i} value={item.nombre}>
+              {item.nombre}
+            </option>
+          ))}
         </select>
 
-        <select name ="articulos" id="selarticulos" className="form-select" aria-label="Default select example">
-          <option value ={-1} selected>Productos</option>
-          {
-            idArticulos> -1 &&
-            (
-              Categorias[idArticulos].articulos.map((item,i)=>(
-                <option key={"articulo"+i} value="">{item}</option>
-              ))
-            )
-          }
+        <select
+          name="articulos"
+          id="selarticulos"
+          onChange={handleProduct}
+          className="form-select"
+          aria-label="Default select example"
+          value={itemName}
+        >
+          <option value={""} selected>
+            Productos
+          </option>
+          {category != "" &&
+            items
+              .filter((item, i) => item.category == category)
+              .map((item) => (
+                <option key={"articulo" + item.id} value={item.product}>
+                  {item.product}
+                </option>
+              ))}
         </select>
 
-        
-        <div
+                {
+                  selectedProduct.map((p,i) => {
+                    <div className="container">{p.name}</div>
+                  })
+                }
+
+        { /*<div
           id="carouselExampleControlsNoTouching"
-          class="carousel slide"
+          className="carousel slide"
           data-bs-touch="false"
         >
           <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div  className="card-producto">
-                 <img
-                  src="https://cdn.pixabay.com/photo/2016/11/19/12/24/bicycle-1839005_960_720.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-                <p>
-                  Bicicleta de velocidad
-                </p>
-                <p>
-                  Precio:$1.200.900
-                </p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2019/07/27/18/24/cyclist-4367308_960_720.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-                <p>
-                  casco amateur
-                </p>
-                <p>
-                  Precio:$16.800
-                </p>
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2020/01/16/06/24/activity-4769731_960_720.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-              <p>
-                  casco profesional
-                </p>
-                <p>
-                  Precio:$36.800
-                </p>
-                
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2015/12/06/18/28/capsules-1079838_960_720.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-              <p>
-                  aminoacidos
-                </p>
-                <p>
-                  Precio:$8.800
-                </p>
-                
-              </div>
-            </div>
-            <div class="carousel-item">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2016/09/01/14/20/chocolate-bar-1636220_1280.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-              <p>
-                  barra proteian
-                </p>
-                <p>
-                  Precio:$6.800
-                </p>
-                
-              </div>
-            </div>
+            {selectedProduct.map((p, i) => {
+              {
+                console.log(p);
+              }
+              <div className="carousel-item" key={i} active={i == 0}>
+                <div className="card-producto">
+                  <img src={p.img} className="card-img-top" alt="..."></img>
+                  <p>{p.name}</p>
+                  <p>{p.price}</p>
+                </div>
+              </div>;
+            })}
           </div>
           <button
-            class="carousel-control-prev"
+            className="carousel-control-prev"
             type="button"
             data-bs-target="#carouselExampleControlsNoTouching"
             data-bs-slide="prev"
@@ -179,7 +154,7 @@ export const UserStore = () => {
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-        </div>
+          </div>*/}
 
         <button
           onClick={() => alert("proximamente")}
