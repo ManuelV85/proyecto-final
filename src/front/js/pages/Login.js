@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useLocation } from "react-router-dom";
+
 import { Logo } from "../component/Logo";
 import  React, {useContext, useState} from 'react'
 import { useForm } from "react-hook-form";
@@ -10,7 +11,13 @@ export const Login = () => {
   const [mostrarComponente, setMostrarComponente] = useState(false);
   const [mostrarrComponente, setMostrarrComponente] = useState(true);
   const [recuperate, setRecuperateComponente] = useState(false);
+
+  const location=useLocation();
+  const message=location.state.response;
+  console.log(message);
+
   const {store} = useContext(Context)
+
 
   const {
     register,

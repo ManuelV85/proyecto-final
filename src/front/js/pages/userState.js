@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
-import React, { useState } from "react";
-import { items } from "./items.js";
+import React, { useState, useEffect } from "react";
+import { products } from "./items1";
+
+const categories = ["repuestos", "neumaticos", "accesorios"];
 
 const Categorias = [
   {
@@ -37,24 +39,93 @@ export const UserStore = () => {
 
   const [idArticulos, setIdArticulos] = useState(-1);
   const [category, setCategory] = useState("");
-  const [itemName, setItemName] = useState("");
-  const [selectedProduct, setSelectedProduct] = useState([
-    { img: "", product: "", name: "", price: "", id: -1 },
-  ]);
+  const [subcategorySelected, setSubcategorySelected] = useState("");
+  const [subcategories, setSubCategories] = useState([]);
+  const [actualIndex, setActualIndex] = useState(0);
+  const [actualItem, setActualItem] = useState({
+    id: -1,
+    category: "",
+    product: "",
+    name: "",
+    price: 0,
+    img: "",
+  });
+  const [item, setItem] = useState({
+    id: -1,
+    category: "",
+    product: "",
+    name: "",
+    price: 0,
+    img: "",
+  });
 
-  const handlerCargarArticulos = function (e) {
-    const opcion = e.target.value;
-    console.log(opcion);
-    setCategory(opcion);
-    //setIdArticulos(opcion);
+  const filterSubcategories = (data = { target: { value: "repuestos" } }) => {
+    //console.log(data.target.value);
+    setCategory(data.target.value);
+    const items = products.filter((p) => p.category == data.target.value);
+    //console.log(items);
+    const subcategories = [];
+    for (var i = 0; i < items.length; i++) {
+      //console.log(items[i]);
+      const founded =
+        subcategories.findIndex((e) => e == items[i].subcategory) == -1;
+      if (founded) {
+        subcategories.push(items[i].subcategory);
+      }
+    }
+    //console.log(subcategories);
+    setSubCategories([...subcategories]);
+    setItem([]);
   };
-  const handleProduct = (product) => {
-    setItemName(product.target.value);
-    console.log("@", selectedProduct);
-    const products = items.filter(
-      (item) => item.product == product.target.value
-    );
-    setSelectedProduct([...products]);
+
+  const handleProduct = (value = { target: { value: "freno" } }) => {
+    setSubcategorySelected(value.target.value);
+    const items = products.filter((p) => p.subcategory == value.target.value);
+    setItem([...items]);
+    //setActualIndex(0);
+    //setActualItem(items[0]);
+    console.log(items);
+  };
+
+  const nextItem = () => {
+    //console.log(actualIndex);
+    //console.log(item.length);
+    if (actualIndex + 1 < item.length) {
+      const a = actualIndex + 1;
+      setActualIndex(a);
+      setActualItem(item[a]);
+      //console.log(item[a]);
+    }
+  };
+
+  const prevItem = () => {
+    // console.log(actualIndex);
+    if (actualIndex - 1 > -1) {
+      setActualIndex(actualIndex - 1);
+      setActualItem(item[actualIndex - 1]);
+    }
+  };
+  useEffect(() => {
+    filterSubcategories();
+    handleProduct();
+  }, []);
+
+  const addToCar = async (item) => {
+    console.log("creando orden de compra" + item.name);
+    /*const response = await fetch(
+     // `https://3001-manuelv85-proyectofinal-vxlmvn2i7lh.ws-us85.gitpod.io/api/signin/${route}`, //runta de generar corre y orden de compra
+
+      {
+        crossDomain: true,
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(actualItem),
+      }
+    ).then((response) => response.json());*/
   };
 
   return (
@@ -63,29 +134,19 @@ export const UserStore = () => {
         <div className="nombre-tienda">
           <Logo />
         </div>
-        <div className="carrito">
-          <button
-            onClick={() => alert("proximamente")}
-            type="submit"
-            className="btn btn-dark"
-          >
-            <i className="fa-solid fa-cart-shopping"></i>{" "}
-          </button>
-        </div>
+        <div className="carrito"></div>
 
         <select
           name="categorias"
           id="selCategoria"
-          onClick={handlerCargarArticulos}
+          onChange={(e) => filterSubcategories(e)}
+          value={category}
           className="form-select"
           aria-label="Default select example"
         >
-          <option value={""} selected>
-            Categoria
-          </option>
-          {Categorias.map((item, i) => (
-            <option key={"categoria" + i} value={item.nombre}>
-              {item.nombre}
+          {categories.map((p, index) => (
+            <option value={p} key={index + 100}>
+              {p}
             </option>
           ))}
         </select>
@@ -96,73 +157,72 @@ export const UserStore = () => {
           onChange={handleProduct}
           className="form-select"
           aria-label="Default select example"
-          value={itemName}
+          value={subcategorySelected}
         >
-          <option value={""} selected>
-            Productos
-          </option>
           {category != "" &&
-            items
-              .filter((item, i) => item.category == category)
-              .map((item) => (
-                <option key={"articulo" + item.id} value={item.product}>
-                  {item.product}
-                </option>
-              ))}
+            subcategories.map((i, index) => (
+              <option value={i} key={index + 100}>
+                {i}
+              </option>
+            ))}
         </select>
-
-                {
-                  selectedProduct.map((p,i) => {
-                    <div className="container">{p.name}</div>
-                  })
-                }
-
-        { /*<div
-          id="carouselExampleControlsNoTouching"
+        <div
+          id="carouselExampleControls"
           className="carousel slide"
-          data-bs-touch="false"
+          data-bs-ride="carousel"
         >
-          <div class="carousel-inner">
-            {selectedProduct.map((p, i) => {
-              {
-                console.log(p);
-              }
-              <div className="carousel-item" key={i} active={i == 0}>
-                <div className="card-producto">
-                  <img src={p.img} className="card-img-top" alt="..."></img>
-                  <p>{p.name}</p>
-                  <p>{p.price}</p>
+          <div className="carousel-inner">
+            {item != null && item.length > 0 ? (
+              item.map((m, index) => (
+                <div
+                  className={
+                    "carousel-item " + (index === actualIndex ? "active" : "") //arreglo de parentesis
+                  }
+                  key={index + 10}
+                >
+                  <img src={m.img} alt={m.name} className="d-block w-100" />
+                  <div class="carousel-caption">
+                    <h3>{m.name}</h3>
+                    <p>{m.price}</p>
+                    <button type="button"
+                      onClick={() => addToCar(m)} // llamar a la función addToCar()
+                      className="btn btn-dark"
+                    >
+                      Comprar
+                    </button>
+                  </div>
                 </div>
-              </div>;
-            })}
+              ))
+            ) : (
+              <div></div>
+            )}
           </div>
+
           <button
             className="carousel-control-prev"
             type="button"
-            data-bs-target="#carouselExampleControlsNoTouching"
+            data-bs-target="#carouselExampleControls"
             data-bs-slide="prev"
+            onClick={prevItem}
           >
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
           <button
-            class="carousel-control-next"
+            className="carousel-control-next"
             type="button"
-            data-bs-target="#carouselExampleControlsNoTouching"
+            data-bs-target="#carouselExampleControls"
             data-bs-slide="next"
+            onClick={nextItem}
           >
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
-          </div>*/}
-
-        <button
-          onClick={() => alert("proximamente")}
-          type="submit"
-          className="btn btn-dark"
-        >
-          Agregar al carro
-        </button>
+        </div>
+        {/*<div className="row">
+          <div>{actualItem.name}</div>
+          <div>{actualItem.price}</div>
+            </div>*/}
       </div>
     </form>
   );
