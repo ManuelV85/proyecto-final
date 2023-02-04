@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { products } from "./items1";
 
 const categories = ["repuestos", "neumaticos", "accesorios"];
@@ -58,7 +58,9 @@ export const UserStore = () => {
     price: 0,
     img: "",
   });
-  const filterSubcategories = (data) => {
+
+  const filterSubcategories = (data = { target: { value: "repuestos" } }) => {
+    //console.log(data.target.value);
     setCategory(data.target.value);
     const items = products.filter((p) => p.category == data.target.value);
     //console.log(items);
@@ -73,14 +75,15 @@ export const UserStore = () => {
     }
     //console.log(subcategories);
     setSubCategories([...subcategories]);
+    setItem([]);
   };
 
-  const handleProduct = (value) => {
+  const handleProduct = (value = { target: { value: "freno" } }) => {
     setSubcategorySelected(value.target.value);
     const items = products.filter((p) => p.subcategory == value.target.value);
     setItem([...items]);
-    setActualIndex(0);
-    setActualItem(items[0]);
+    //setActualIndex(0);
+    //setActualItem(items[0]);
     console.log(items);
   };
 
@@ -102,10 +105,15 @@ export const UserStore = () => {
       setActualItem(item[actualIndex - 1]);
     }
   };
+  useEffect(() => {
+    filterSubcategories();
+    handleProduct();
+  }, []);
 
-  const addToCar = async () => {
-    const response = await fetch(
-      `https://3001-manuelv85-proyectofinal-vxlmvn2i7lh.ws-us85.gitpod.io/api/signin/${route}`, //runta de generar corre y orden de compra
+  const addToCar = async (item) => {
+    console.log("creando orden de compra" + item.name);
+    /*const response = await fetch(
+     // `https://3001-manuelv85-proyectofinal-vxlmvn2i7lh.ws-us85.gitpod.io/api/signin/${route}`, //runta de generar corre y orden de compra
 
       {
         crossDomain: true,
@@ -117,7 +125,7 @@ export const UserStore = () => {
         referrerPolicy: "no-referrer",
         body: JSON.stringify(actualItem),
       }
-    ).then((response) => response.json());
+    ).then((response) => response.json());*/
   };
 
   return (
@@ -168,11 +176,21 @@ export const UserStore = () => {
               item.map((m, index) => (
                 <div
                   className={
-                    "carousel-item " + ( index === actualIndex ? "active" : "") //arreglo de parentesis
+                    "carousel-item " + (index === actualIndex ? "active" : "") //arreglo de parentesis
                   }
                   key={index + 10}
                 >
-                  <img src={m.img} className="d-block w-100" />
+                  <img src={m.img} alt={m.name} className="d-block w-100" />
+                  <div class="carousel-caption">
+                    <h3>{m.name}</h3>
+                    <p>{m.price}</p>
+                    <button type="button"
+                      onClick={() => addToCar(m)} // llamar a la función addToCar()
+                      className="btn btn-dark"
+                    >
+                      Comprar
+                    </button>
+                  </div>
                 </div>
               ))
             ) : (
@@ -201,17 +219,10 @@ export const UserStore = () => {
             <span class="visually-hidden">Next</span>
           </button>
         </div>
-        <div className="row">
+        {/*<div className="row">
           <div>{actualItem.name}</div>
           <div>{actualItem.price}</div>
-        </div>
-        <button
-          onClick={() => alert("proximamente")} // llamar a la función addToCar()
-          type="submit"
-          className="btn btn-dark"
-        >
-          Generar Orden de compra
-        </button>
+            </div>*/}
       </div>
     </form>
   );
