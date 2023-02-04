@@ -8,25 +8,6 @@ import { sendEmail } from "../service/emailService";
 export const Registration = () => {
   const navigate = useNavigate();
   const url = process.env.BACKEND_URL
-
-  const [email, setEmail] = useState("");
-  const [user, setUser] = useState({
-    email: "mail@mail.com",
-    name: "Jhon Doe",
-  });
-
-  const [link, setLink] = useState("www.google.com");
-
-  const verify = (_) => {
-    if (email.localeCompare(user.email) != 0) throw Error("Invalid Email");
-    let params = {
-      to_email: user.email,
-      to_name: user.name,
-      to_link: link,
-    };
-    sendEmail(params);
-  };
-
   
 
   const [isBike, setIsBike] = useState(true);

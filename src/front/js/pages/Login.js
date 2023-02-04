@@ -1,24 +1,22 @@
-import { useNavigate,useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import { Logo } from "../component/Logo";
-import  React, {useContext, useState} from 'react'
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import {Context} from '../store/appContext'
-
+import { Context } from "../store/appContext";
 
 export const Login = () => {
-  const url = process.env.BACKEND_URL
+  const url = process.env.BACKEND_URL;
   const navigate = useNavigate();
   const [mostrarComponente, setMostrarComponente] = useState(false);
   const [mostrarrComponente, setMostrarrComponente] = useState(true);
   const [recuperate, setRecuperateComponente] = useState(false);
 
-  const location=useLocation();
-  
+  const location = useLocation();
+  const message = location.state == [] ? "" : location.state.response;
   console.log(message);
 
-  const {store} = useContext(Context)
-
+  const { store, actions } = useContext(Context);
 
   const {
     register,
@@ -27,37 +25,15 @@ export const Login = () => {
   } = useForm();
 
   const onSubmit = async (dataUser) => {
-    const response = await fetch(
-      url + "/api/login",
-      {
-        crossDomain: true,
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(dataUser),
-      }
-    ).then((response) => response.json());
-
-    if (response["code"] >= 2) {
-      alert(response["response"]);
-    } else {
-      store.user = {type:response["type"], id: response["id"], token: response["token"]}
-      localStorage.setItem("iProBike-token", store.user.token)
-      localStorage.setItem("iProBike-type", store.user.type)
-
-      
-      console.log(store.user) //<-- comprobar datos
-      const isBike = response["type"] == "user" ? true : false;
+    await actions.login(dataUser)
+      const isBike = store.user.type == "user" ? true : false;
       if (isBike) {
         navigate("/biker");
       } else {
         navigate("/menustore");
       }
     }
-  };
+ 
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contenedor-login">

@@ -1,58 +1,40 @@
 const getState = ({ getStore, getActions, setStore }) => {
+  const url = process.env.BACKEND_URL;
   return {
     store: {
-      message: null,
-      demo: [
-        {
-          title: "FIRST",
-          background: "white",
-          initial: "white",
-        },
-        {
-          title: "SECOND",
-          background: "white",
-          initial: "white",
-        },
-      ],
       user: {
         type: "",
         token: "",
         id: "",
       },
-     
-	  
     },
     actions: {
-      // Use getActions to call a function within a fuction
-      exampleFunction: () => {
-        getActions().changeColor(0, "green");
-      },
+      login: async (dataUser) => {
+        const response = await fetch(url + "/api/login", {
+          crossDomain: true,
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          referrerPolicy: "no-referrer",
+          body: JSON.stringify(dataUser),
+        }).then((response) => response.json());
 
-      getMessage: async () => {
-        try {
-          // fetching data from the backend
-          const resp = await fetch(process.env.BACKEND_URL + "/api/hello");
-          const data = await resp.json();
-          setStore({ message: data.message });
-          // don't forget to return something, that is how the async resolves
-          return data;
-        } catch (error) {
-          console.log("Error loading message from backend", error);
+        if (response["code"] >= 2) {
+          console.log(response["response"]);
+        } else {
+          let responseUser = {
+            type: response["type"],
+            id: response["id"],
+            token: response["token"],
+          };
+          setStore({user:responseUser})
+          localStorage.setItem("iProBike-token", responseUser.token);
+          localStorage.setItem("iProBike-type", responseUser.type);
+
+          console.log(getStore.user); //<-- comprobar datos
         }
-      },
-      changeColor: (index, color) => {
-        //get the store
-        const store = getStore();
-
-        //we have to loop the entire demo array to look for the respective index
-        //and change its color
-        const demo = store.demo.map((elm, i) => {
-          if (i === index) elm.background = color;
-          return elm;
-        });
-
-        //reset the global store
-        setStore({ demo: demo });
       },
     },
   };
