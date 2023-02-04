@@ -13,7 +13,10 @@ export const Login = () => {
   const [recuperate, setRecuperateComponente] = useState(false);
 
   const location = useLocation();
-  const message = location.state == [] ? "" : location.state.response;
+  const message =
+    location.state == [] || location.state == null
+      ? ""
+      : location.state.response;
   console.log(message);
 
   const { store, actions } = useContext(Context);
@@ -25,15 +28,14 @@ export const Login = () => {
   } = useForm();
 
   const onSubmit = async (dataUser) => {
-    await actions.login(dataUser)
-      const isBike = store.user.type == "user" ? true : false;
-      if (isBike) {
-        navigate("/biker");
-      } else {
-        navigate("/menustore");
-      }
+    await actions.login(dataUser);
+    const isBike = store.user.type == "user" ? true : false;
+    if (isBike) {
+      navigate("/biker");
+    } else {
+      navigate("/menustore");
     }
- 
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contenedor-login">
