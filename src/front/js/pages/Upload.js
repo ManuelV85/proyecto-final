@@ -23,7 +23,7 @@ export const Upload_item = () => {
     }
 
     const response = await fetch(
-      `https://3001-manuelv85-proyectofinal-mqix53vw88a.ws-us84.gitpod.io/api/users/inventory`,
+      `https://3001-manuelv85-proyectofinal-vxlmvn2i7lh.ws-us85.gitpod.io/api/users/inventory`,
 
       {
         crossDomain: true,
