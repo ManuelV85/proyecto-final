@@ -32,6 +32,8 @@ export const Registration = () => {
   const {
     register,
     handleSubmit,
+    watch,
+    getValues,
     formState: { errors },
   } = useForm();
 
@@ -39,8 +41,7 @@ export const Registration = () => {
    
     const route = isBike ? "users" : "ws";
     const response = await fetch(
-      `https://3001-ovaldes133-proyectofina-ye19cz67sok.ws-us85.gitpod.io/api/signin/${route}`,
-
+      `https://3001-manuelv85-proyectofinal-249cqjvojsb.ws-us85.gitpod.io/api/signin/${route}`,
       {
         crossDomain: true,
         method: "POST",
@@ -157,7 +158,22 @@ export const Registration = () => {
         <label for="InputRepeatPassword" className="form-label">
           Repita contraseña
         </label>
-        <input type="password" className="form-control" id="InputRepeatPassword" />
+        <input
+          type="password"
+          className="form-control"
+          id="InputRepeatPassword"
+          {...register("password2", {
+            required: {
+              value: true,
+              message: "Necesitas este campo",
+            },
+          })}
+        />
+        {watch("password") !== watch("password2") && getValues("password2") ? (
+          <h1 style={{ color: "red", fontSize: "16px" }}>
+            Contraseñas no coinciden
+          </h1>
+        ) : null}
 
         <label for="InputAddress" className="form-label">
           Direccion

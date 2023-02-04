@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
-import React, { useState } from "react";
-import { useRef } from "react";
-import emailjs from "@emailjs/browser";
+import React, { useState, useEffect } from "react";
+import { products } from "./items1";
+
+const categories = ["repuestos", "neumaticos", "accesorios"];
 
 const Categorias = [
   {
@@ -36,67 +37,116 @@ const Categorias = [
 export const UserStore = () => {
   const navigate = useNavigate();
 
-  const form = useRef();
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs
-      .sendForm(
-        "service_uiz090m",
-        "template_kjnrngs",
-        form.current,
-        "RFjylzfzoYSVtr24B"
-      )
-      .then(
-        (result) => {
-          console.log(result.text);
-        },
-        (error) => {
-          console.log(error.text);
-        }
-      );
-  };
-
   const [idArticulos, setIdArticulos] = useState(-1);
+  const [category, setCategory] = useState("");
+  const [subcategorySelected, setSubcategorySelected] = useState("");
+  const [subcategories, setSubCategories] = useState([]);
+  const [actualIndex, setActualIndex] = useState(0);
+  const [actualItem, setActualItem] = useState({
+    id: -1,
+    category: "",
+    product: "",
+    name: "",
+    price: 0,
+    img: "",
+  });
+  const [item, setItem] = useState({
+    id: -1,
+    category: "",
+    product: "",
+    name: "",
+    price: 0,
+    img: "",
+  });
 
-  const handlerCargarArticulos = function (e) {
-    const opcion = e.target.value;
-    
-
-    setIdArticulos(opcion);
+  const filterSubcategories = (data = { target: { value: "repuestos" } }) => {
+    //console.log(data.target.value);
+    setCategory(data.target.value);
+    const items = products.filter((p) => p.category == data.target.value);
+    //console.log(items);
+    const subcategories = [];
+    for (var i = 0; i < items.length; i++) {
+      //console.log(items[i]);
+      const founded =
+        subcategories.findIndex((e) => e == items[i].subcategory) == -1;
+      if (founded) {
+        subcategories.push(items[i].subcategory);
+      }
+    }
+    //console.log(subcategories);
+    setSubCategories([...subcategories]);
+    setItem([]);
   };
 
-  
+  const handleProduct = (value = { target: { value: "freno" } }) => {
+    setSubcategorySelected(value.target.value);
+    const items = products.filter((p) => p.subcategory == value.target.value);
+    setItem([...items]);
+    //setActualIndex(0);
+    //setActualItem(items[0]);
+    console.log(items);
+  };
+
+  const nextItem = () => {
+    //console.log(actualIndex);
+    //console.log(item.length);
+    if (actualIndex + 1 < item.length) {
+      const a = actualIndex + 1;
+      setActualIndex(a);
+      setActualItem(item[a]);
+      //console.log(item[a]);
+    }
+  };
+
+  const prevItem = () => {
+    // console.log(actualIndex);
+    if (actualIndex - 1 > -1) {
+      setActualIndex(actualIndex - 1);
+      setActualItem(item[actualIndex - 1]);
+    }
+  };
+  useEffect(() => {
+    filterSubcategories();
+    handleProduct();
+  }, []);
+
+  const addToCar = async (item) => {
+    console.log("creando orden de compra" + item.name);
+    /*const response = await fetch(
+     // `https://3001-manuelv85-proyectofinal-vxlmvn2i7lh.ws-us85.gitpod.io/api/signin/${route}`, //runta de generar corre y orden de compra
+
+      {
+        crossDomain: true,
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(actualItem),
+      }
+    ).then((response) => response.json());*/
+  };
+
   return (
-    <form ref={form} onSubmit={sendEmail} className="contenedor-login">
+    <form className="contenedor-login">
       <div className="mb-3">
         <div className="nombre-tienda">
           <Logo />
         </div>
-        <div className="carrito">
-          <button
-            onClick={() => alert("proximamente")}
-            type="submit"
-            className="btn btn-dark"
-          >
-            <i className="fa-solid fa-cart-shopping"></i>{" "}
-          </button>
-        </div>
+        <div className="carrito"></div>
 
         <select
           name="categorias"
           id="selCategoria"
-          onClick={handlerCargarArticulos}
+          onChange={(e) => filterSubcategories(e)}
+          value={category}
           className="form-select"
           aria-label="Default select example"
         >
-          <option value={-1} selected>
-            Categoria
-          </option>
-          {Categorias.map((item, i) => (
-            <option key={"categoria" + i} value={i}>
-              {item.nombre}
+          {categories.map((p, index) => (
+            <option value={p} key={index + 100}>
+              {p}
             </option>
           ))}
         </select>
@@ -104,170 +154,75 @@ export const UserStore = () => {
         <select
           name="articulos"
           id="selarticulos"
+          onChange={handleProduct}
           className="form-select"
           aria-label="Default select example"
+          value={subcategorySelected}
         >
-          <option value={-1} selected>
-            Productos
-          </option>
-          {idArticulos > -1 &&
-            Categorias[idArticulos].articulos.map((item, i) => (
-              <option key={"articulo" + i} value="">
-                {item}
+          {category != "" &&
+            subcategories.map((i, index) => (
+              <option value={i} key={index + 100}>
+                {i}
               </option>
             ))}
         </select>
-        
-
         <div
-          id="carouselExampleControlsNoTouching"
-          class="carousel slide"
-          data-bs-touch="false"
+          id="carouselExampleControls"
+          className="carousel slide"
+          data-bs-ride="carousel"
         >
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2016/11/19/12/24/bicycle-1839005_960_720.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-                <input
-                  className="form-control"
-                  name="user_producto"
-                  value="Bicicleta de velocidad"
-                />
-
-                <input
-                  className="form-control"
-                  name="user_precio"
-                  value="precio:$1.200.000"
-                />
-              </div>
-              <input
-                className="form-control"
-                type="email"
-                name="user_email"
-                placeholder="Ingrese Email"
-              />
-
-              <button type="submit" className="btn btn-dark" value="Send">
-                enviar orden de compra
-              </button>
-            </div>
-            <div class="carousel-item">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2019/07/27/18/24/cyclist-4367308_960_720.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-                <input
-                  className="form-control"
-                  name="user_producto"
-                  value="casco amateur"
-                />
-
-                <input
-                  className="form-control"
-                  name="user_precio"
-                  value="precio:$16.800"
-                />
-              </div>
-              <input
-                className="form-control"
-                type="email"
-                name="user_email"
-                placeholder="Ingrese Email"
-              />
-
-              <button type="submit" className="btn btn-dark" value="Send">
-                enviar orden de compra
-              </button>
-            </div>
-
-            <div class="carousel-item">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2015/12/06/18/28/capsules-1079838_960_720.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-                <input
-                  className="form-control"
-                  name="user_producto"
-                  value="aminoacido"
-                />
-
-                <input
-                  className="form-control"
-                  name="user_precio"
-                  value="precio:$8.800"
-                />
-              </div>
-              <input
-                className="form-control"
-                type="email"
-                name="user_email"
-                placeholder="Ingrese Email"
-              />
-
-              <button type="submit" className="btn btn-dark" value="Send">
-                enviar orden de compra
-              </button>
-            </div>
-            <div class="carousel-item">
-              <div className="card-producto">
-                <img
-                  src="https://cdn.pixabay.com/photo/2016/09/01/14/20/chocolate-bar-1636220_1280.jpg"
-                  className="card-img-top"
-                  alt="..."
-                ></img>
-                <input
-                  className="form-control"
-                  type="producto"
-                  name="user_producto"
-                  value="proteina"
-                />
-
-                <input
-                  className="form-control"
-                  type="precio"
-                  name="user_precio"
-                  value="Precio:$6.800"
-                />
-              </div>
-              <input
-                className="form-control"
-                type="email"
-                name="user_email"
-                placeholder="Ingrese Email"
-              />
-
-              <button type="submit" className="btn btn-dark" value="Send">
-                enviar orden de compra
-              </button>
-            </div>
+          <div className="carousel-inner">
+            {item != null && item.length > 0 ? (
+              item.map((m, index) => (
+                <div
+                  className={
+                    "carousel-item " + (index === actualIndex ? "active" : "") //arreglo de parentesis
+                  }
+                  key={index + 10}
+                >
+                  <img src={m.img} alt={m.name} className="d-block w-100" />
+                  <div class="carousel-caption">
+                    <h3>{m.name}</h3>
+                    <p>{m.price}</p>
+                    <button type="button"
+                      onClick={() => addToCar(m)} // llamar a la función addToCar()
+                      className="btn btn-dark"
+                    >
+                      Comprar
+                    </button>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div></div>
+            )}
           </div>
+
           <button
-            class="carousel-control-prev"
+            className="carousel-control-prev"
             type="button"
-            data-bs-target="#carouselExampleControlsNoTouching"
+            data-bs-target="#carouselExampleControls"
             data-bs-slide="prev"
+            onClick={prevItem}
           >
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Previous</span>
           </button>
           <button
-            class="carousel-control-next"
+            className="carousel-control-next"
             type="button"
-            data-bs-target="#carouselExampleControlsNoTouching"
+            data-bs-target="#carouselExampleControls"
             data-bs-slide="next"
+            onClick={nextItem}
           >
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
           </button>
         </div>
+        {/*<div className="row">
+          <div>{actualItem.name}</div>
+          <div>{actualItem.price}</div>
+            </div>*/}
       </div>
     </form>
   );

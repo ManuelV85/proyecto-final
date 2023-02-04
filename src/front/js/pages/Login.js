@@ -1,18 +1,24 @@
 import { useNavigate,useLocation } from "react-router-dom";
 
 import { Logo } from "../component/Logo";
-import React from "react";
-import { useState } from "react";
+import  React, {useContext, useState} from 'react'
 import { useForm } from "react-hook-form";
+import {Context} from '../store/appContext'
+
 
 export const Login = () => {
   const navigate = useNavigate();
   const [mostrarComponente, setMostrarComponente] = useState(false);
   const [mostrarrComponente, setMostrarrComponente] = useState(true);
   const [recuperate, setRecuperateComponente] = useState(false);
+
   const location=useLocation();
   const message=location.state.response;
   console.log(message);
+
+  const {store} = useContext(Context)
+
+
   const {
     register,
     handleSubmit,
@@ -21,7 +27,7 @@ export const Login = () => {
 
   const onSubmit = async (dataUser) => {
     const response = await fetch(
-      "https://3001-manuelv85-proyectofinal-v7aexyo3isp.ws-us84.gitpod.io/api/login",
+      "https://3001-manuelv85-proyectofinal-249cqjvojsb.ws-us85.gitpod.io/api/login",
       {
         crossDomain: true,
         method: "POST",
@@ -33,9 +39,23 @@ export const Login = () => {
         body: JSON.stringify(dataUser),
       }
     ).then((response) => response.json());
+
     if (response["code"] >= 2) {
       alert(response["response"]);
-    } else alert("bienvenido");
+    } else {
+      store.user = {type:response["type"], id: response["id"], token: response["token"]}
+      localStorage.setItem("iProBike-token", store.user.token)
+      localStorage.setItem("iProBike-type", store.user.type)
+
+      
+      console.log(store.user) //<-- comprobar datos
+      const isBike = response["type"] == "user" ? true : false;
+      if (isBike) {
+        navigate("/biker");
+      } else {
+        navigate("/menustore");
+      }
+    }
   };
 
   return (
@@ -96,17 +116,10 @@ export const Login = () => {
       </div>
 
       <div class="mb-3 ">
-        <button type="submit" value="submit" className="btn btn-dark"
-           onClick={() => navigate("/Biker")}  >
-          Entrar Biker
+        <button type="submit" value="submit" className="btn btn-dark">
+          Entrar
         </button>
-        <button
-          onClick={() => navigate("/menustore")}
-          type="submit"
-          className="btn btn-dark"
-        >
-          Entrar Store
-        </button>
+
         <button
           onClick={() => navigate("/Emailpassword")}
           type="submit"
