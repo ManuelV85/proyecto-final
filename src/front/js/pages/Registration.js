@@ -40,7 +40,7 @@ export const Registration = () => {
   const onSubmit = async (dataUser) => {
    
     const route = isBike ? "users" : "ws";
-    const response = await fetch(
+    const response = await fetch(   
       `https://3001-manuelv85-proyectofinal-249cqjvojsb.ws-us85.gitpod.io/api/signin/${route}`,
       {
         crossDomain: true,
