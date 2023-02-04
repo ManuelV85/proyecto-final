@@ -36,6 +36,7 @@ const Categorias = [
 
 export const UserStore = () => {
   const navigate = useNavigate();
+  const url = process.env.BACKEND_URL
 
   const [idArticulos, setIdArticulos] = useState(-1);
   const [category, setCategory] = useState("");
@@ -113,7 +114,7 @@ export const UserStore = () => {
   const addToCar = async (item) => {
     console.log("creando orden de compra" + item.name);
     /*const response = await fetch(
-     // `https://3001-manuelv85-proyectofinal-vxlmvn2i7lh.ws-us85.gitpod.io/api/signin/${route}`, //runta de generar corre y orden de compra
+     // url +`/api/signin/${route}`, //runta de generar corre y orden de compra
 
       {
         crossDomain: true,

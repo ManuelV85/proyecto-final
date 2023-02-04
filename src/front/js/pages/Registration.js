@@ -7,6 +7,7 @@ import { sendEmail } from "../service/emailService";
 
 export const Registration = () => {
   const navigate = useNavigate();
+  const url = process.env.BACKEND_URL
 
   const [email, setEmail] = useState("");
   const [user, setUser] = useState({
@@ -41,7 +42,7 @@ export const Registration = () => {
    
     const route = isBike ? "users" : "ws";
     const response = await fetch(   
-      `https://3001-manuelv85-proyectofinal-249cqjvojsb.ws-us85.gitpod.io/api/signin/${route}`,
+      `${url}/api/signin/${route}`,
       {
         crossDomain: true,
         method: "POST",

@@ -7,13 +7,14 @@ import {Context} from '../store/appContext'
 
 
 export const Login = () => {
+  const url = process.env.BACKEND_URL
   const navigate = useNavigate();
   const [mostrarComponente, setMostrarComponente] = useState(false);
   const [mostrarrComponente, setMostrarrComponente] = useState(true);
   const [recuperate, setRecuperateComponente] = useState(false);
 
   const location=useLocation();
-  const message=location.state.response;
+  
   console.log(message);
 
   const {store} = useContext(Context)
@@ -27,7 +28,7 @@ export const Login = () => {
 
   const onSubmit = async (dataUser) => {
     const response = await fetch(
-      "https://3001-manuelv85-proyectofinal-vxlmvn2i7lh.ws-us85.gitpod.io/api/login",
+      url + "/api/login",
       {
         crossDomain: true,
         method: "POST",

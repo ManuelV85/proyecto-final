@@ -2,6 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 export const Upload_item = () => {
+  const url = process.env.BACKEND_URL
   const {
     register,
     handleSubmit,
@@ -23,7 +24,7 @@ export const Upload_item = () => {
     }
 
     const response = await fetch(
-      `https://3001-manuelv85-proyectofinal-vxlmvn2i7lh.ws-us85.gitpod.io/api/users/inventory`,
+      url + `/api/users/inventory`,
 
       {
         crossDomain: true,
