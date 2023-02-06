@@ -6,6 +6,7 @@ export const products = [
     price: "10.000",
     img: "https://res.cloudinary.com/duyceuv9y/image/upload/v1675469178/categoria/freno_taqfby.png",
     id: 1,
+    user_id: 15
   },
   {
     category: "repuestos",
@@ -14,6 +15,7 @@ export const products = [
     price: "12.000",
     img: "https://res.cloudinary.com/duyceuv9y/image/upload/v1675469178/categoria/cadena_f4tb0y.png",
     id: 2,
+    user_id: 15
   },
   {
     category: "accesorios",
@@ -22,6 +24,7 @@ export const products = [
     price: "15.000",
     img: "https://res.cloudinary.com/duyceuv9y/image/upload/v1675469211/categoria/neumatico_be5uzm.png",
     id: 3,
+    user_id: 15
   },
   {
     category: "repuestos",
@@ -30,5 +33,6 @@ export const products = [
     price: "156.000",
     img: "https://res.cloudinary.com/duyceuv9y/image/upload/v1675469211/categoria/neumatico_be5uzm.png",
     id: 4,
+    user_id: 15
   },
 ];

@@ -139,7 +139,7 @@ def all_users():
     return jsonify(users_db), 200
     
 #API user GET by id
-@api.route('/users/<int:id>', methods = ['GET'])
+@api.route('/users/<id>', methods = ['GET'])
 def id_users(id):
     users_db = User.query.get(id)
     if users_db is None:

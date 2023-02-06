@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
 import React, { useState, useEffect } from "react";
 import { products } from "./items1";
+import { sendEmail } from "../service/emailService";
 
 const categories = ["repuestos", "neumaticos", "accesorios"];
 
@@ -36,7 +37,7 @@ const Categorias = [
 
 export const UserStore = () => {
   const navigate = useNavigate();
-  const url = process.env.BACKEND_URL
+  const url = process.env.BACKEND_URL;
 
   const [idArticulos, setIdArticulos] = useState(-1);
   const [category, setCategory] = useState("");
@@ -111,22 +112,15 @@ export const UserStore = () => {
     handleProduct();
   }, []);
 
+  const getUserById = async (id) => {
+    const response = await fetch(`${url}/api/users/${id}`);
+    const data = await response.json();   
+    return data
+  }
   const addToCar = async (item) => {
     console.log("creando orden de compra" + item.name);
-    /*const response = await fetch(
-     // url +`/api/signin/${route}`, //runta de generar corre y orden de compra
-
-      {
-        crossDomain: true,
-        method: "POST",
-        mode: "cors",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        referrerPolicy: "no-referrer",
-        body: JSON.stringify(actualItem),
-      }
-    ).then((response) => response.json());*/
+    const wsUser = await getUserById(item.user_id);
+    sendEmail({to_email:wsUser.email,to_name:wsUser.first_name})
   };
 
   return (
@@ -185,7 +179,8 @@ export const UserStore = () => {
                   <div class="carousel-caption">
                     <h3>{m.name}</h3>
                     <p>{m.price}</p>
-                    <button type="button"
+                    <button
+                      type="button"
                       onClick={() => addToCar(m)} // llamar a la función addToCar()
                       className="btn btn-dark"
                     >
