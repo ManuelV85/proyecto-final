@@ -1,9 +1,18 @@
 import { useNavigate } from "react-router-dom";
+import { useJwt } from "react-jwt";
 
 import React from "react";
 
 export const MenuStore = () => {
   const navigate = useNavigate();
+  const userToken = localStorage.getItem("iProBike-token");
+  const { token, isExpired } = useJwt(userToken);
+  const typeW = localStorage.getItem("iProBike-type");
+  if (isExpired) {
+    navigate("/login");
+  } else if (!isExpired && typeW == "user") {
+    navigate("/page404");
+  }
 
   return (
     <form className="contenedor-login">
@@ -31,7 +40,7 @@ export const MenuStore = () => {
         </button>
 
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/horario")}
           type="submit"
           className="btn btn-dark"
         >

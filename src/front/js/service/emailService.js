@@ -1,9 +1,13 @@
 import emailjs from "@emailjs/browser";
 
 export const sendEmail = (params) => {
+  console.log(params)
   const serviceId = process.env.SERVICE_ID;
   const templateId = process.env.TEMPLATE_ID;
   const key = process.env.KEY;
+  console.log(serviceId)
+  console.log(templateId)
+  console.log(key)
 
   const templateParams = {
     from_name: "TuCleta",

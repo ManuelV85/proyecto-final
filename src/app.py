@@ -11,6 +11,10 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
+from flask_jwt_extended import JWTManager
+import cloudinary
+
+from cloudinary.utils import cloudinary_url
 
 #from models import Person
 
@@ -32,6 +36,7 @@ db.init_app(app)
 
 # Allow CORS requests to this API
 CORS(app)
+CORS(api)
 
 # add the admin
 setup_admin(app)
@@ -41,6 +46,8 @@ setup_commands(app)
 
 # Add all endpoints form the API with a "api" prefix
 app.register_blueprint(api, url_prefix='/api')
+
+jwt = JWTManager(app)
 
 # Handle/serialize errors like a JSON object
 @app.errorhandler(APIException)
@@ -65,6 +72,12 @@ def serve_any_other_file(path):
 
 
 
+cloudinary.config(
+  cloud_name = "duyceuv9y",
+  api_key = "335769112718419",
+  api_secret = "c8ZI9S9xBd3I8Y5knarbs0AS3rY",
+  secure = True
+)
 
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':

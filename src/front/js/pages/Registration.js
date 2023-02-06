@@ -1,51 +1,62 @@
-import { useState } from "react";
+import { useState,useRef} from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import React from "react";
+import { sendEmail } from "../service/emailService";
+
 
 export const Registration = () => {
   const navigate = useNavigate();
+  const url = process.env.BACKEND_URL
+  
 
-  const [mostrarComponente, setMostrarComponente] = useState(true);
+  const [isBike, setIsBike] = useState(true);
   const {
     register,
     handleSubmit,
+    watch,
+    getValues,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (evento) => {
-    console.log(evento);
-  };
-
-  const data = {
-    first_name: first_name.toLowerCase(),
-    last_name: last_name.toLowrCase(),
-    email: email.toLowerCase(),
-    password: password,
-    address: address.toLowerCase()
- };
-
-  fetch(process.env.BACKEND_URL + " /api/signin", {
-      method:"POST",
-       headers:{
-                "Content-Type": "applocation/json"},
-                body: JSON.stringify(data)
+  const onSubmit = async (dataUser) => {
+   
+    const route = isBike ? "users" : "ws";
+    const response = await fetch(   
+      `${url}/api/signin/${route}`,
+      {
+        crossDomain: true,
+        method: "POST",
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        referrerPolicy: "no-referrer",
+        body: JSON.stringify(dataUser),
       }
-    )
-
+    ).then((response) => response.json());
+    if (response["code"] == 1) {
+      alert(response["response"]);
+    } else if (response["code"] == 0) {
+    
+      
+      sendEmail({to_email:dataUser.email,to_name:dataUser.first_name})
+      navigate("/login",{state:{response:response["response"]}})
+    };
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="contenedor-login">
       <div className="mb-3">
         <button
-          onClick={() => setMostrarComponente(true)}
+          onClick={() => setIsBike(false)}
           type="button"
           className="btn btn-dark"
         >
           Tienda
         </button>
         <button
-          onClick={() => setMostrarComponente(false)}
+          onClick={() => setIsBike(true)}
           type="button"
           className="btn btn-dark"
         >
@@ -53,33 +64,42 @@ export const Registration = () => {
         </button>
       </div>
       <div className="mb-3">
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputName" className="form-label">
           Nombre
         </label>
         <input
           type="text"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="InputName"
+          {...register("first_name")}
         />
-
-        <label for="exampleInputEmail1" className="form-label">
-          Apellido
+        {isBike ? (
+          <>
+            <label for="InputLastName" className="form-label">
+              Apellido
+            </label>
+            <input
+              type="text"
+              className="form-control"
+              id="InputLastName"
+              {...register("last_name")}
+            />
+          </>
+        ) : (
+          <></>
+        )}
+        <label for="exampleInputEmail" className="form-label">
+          E-mail
         </label>
         <input
-          type="text"
+         title="email"
+         type="email"
+        
+         
+          
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-        />
-
-        <label for="exampleInputEmail1" className="form-label">
-          E-mail{" "}
-        </label>
-        <input
-          type="email"
-          className="form-control"
-          id="exampleInputEmail1"
+          id="exampleInputEmail"
+          {...register("email")}
           aria-describedby="emailHelp"
           {...register("email", {
             required: {
@@ -95,14 +115,13 @@ export const Registration = () => {
         <div className="error">
           {errors.email && <span>{errors.email.message}</span>}
         </div>
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputPassword" className="form-label">
           Contraseña
         </label>
         <input
-          type="text"
+          type="password"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="InputPassword"
           {...register("password", {
             required: {
               value: true,
@@ -114,60 +133,66 @@ export const Registration = () => {
             },
           })}
         />
-         <div className="error">
+        <div className="error">
           {errors.password && <span>{errors.password.message}</span>}
         </div>
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputRepeatPassword" className="form-label">
           Repita contraseña
         </label>
         <input
-          type="text"
+          type="password"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="InputRepeatPassword"
+          {...register("password2", {
+            required: {
+              value: true,
+              message: "Necesitas este campo",
+            },
+          })}
         />
+        {watch("password") !== watch("password2") && getValues("password2") ? (
+          <h1 style={{ color: "red", fontSize: "16px" }}>
+            Contraseñas no coinciden
+          </h1>
+        ) : null}
 
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputAddress" className="form-label">
           Direccion
         </label>
         <input
           type="text"
           className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
+          id="InputAddress"
+          {...register("address")}
         />
 
-        {mostrarComponente ? (
+        {!isBike ? (
           <>
-            <label for="exampleInputEmail1" className="form-label">
+            <label for="InputHours" className="form-label">
               horario Ej:(8:00 a 17:00)
             </label>
             <input
               type="text"
               className="form-control"
-              id="exampleInputEmail1elim"
-              aria-describedby="emailHelp"
+              id="InputHours"
+              {...register("hours")}
             />
-            <label for="exampleInputEmail1" className="form-label">
+            <label for="InputScheduling" className="form-label">
               dias Ej:(Lun-Mar)
             </label>
             <input
               type="text"
               className="form-control"
-              id="exampleInputEmail1elim"
-              aria-describedby="emailHelp"
+              id="InputScheduling"
+              {...register("scheduling")}
             />
           </>
         ) : (
           <></>
         )}
       </div>
-      <button
-       
-        type="submit"
-        className="btn btn-dark"
-      >
+      <button type="submit" className="btn btn-dark" >
         Crear cuenta
       </button>
     </form>

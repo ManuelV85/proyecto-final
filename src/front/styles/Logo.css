@@ -1,4 +1,4 @@
-.M {
+.i {
     background-color: rgba(8, 222, 37, 0.519);
     backdrop-filter: blur(1px);
     color: black;
@@ -6,14 +6,14 @@
     margin: 2px;
   }
   
-  .Y {
+  .P {
     background-color: rgb(8, 222, 37);
     color: rgb(255, 255, 255);
   
     margin: 2px;
   }
   
-  .B {
+  .r {
     background-color: rgba(8, 222, 37, 0.519);
     backdrop-filter: blur(1px);
     color: rgb(0, 11, 0);
@@ -21,21 +21,36 @@
     margin: 2px;
   }
   
-  .I {
+  .o {
     background-color: rgba(8, 222, 37, 0.519);
     backdrop-filter: blur(1px);
     color: rgb(10, 0, 0);
     margin: 2px;
   }
   
-  .K {
+  .B {
     background-color: rgb(8, 222, 37);
     color: rgb(238, 251, 238);
   
     margin: 2px;
   }
   
-  .E {
+  .i {
+    color: rgb(11, 0, 0);
+    background-color: rgba(8, 222, 37, 0.519);
+    backdrop-filter: blur(1px);
+  
+    margin: 2px;
+  }
+
+  .k {
+    background-color: rgb(8, 222, 37);
+    color: rgb(238, 251, 238);
+  
+    margin: 2px;
+  }
+  
+  .e {
     color: rgb(11, 0, 0);
     background-color: rgba(8, 222, 37, 0.519);
     backdrop-filter: blur(1px);

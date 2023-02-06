@@ -1,14 +1,25 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import { Logo } from "../component/Logo";
-import React from "react";
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { Context } from "../store/appContext";
 
 export const Login = () => {
+  const url = process.env.BACKEND_URL;
   const navigate = useNavigate();
   const [mostrarComponente, setMostrarComponente] = useState(false);
   const [mostrarrComponente, setMostrarrComponente] = useState(true);
   const [recuperate, setRecuperateComponente] = useState(false);
+
+  const location = useLocation();
+  const message =
+    location.state == [] || location.state == null
+      ? ""
+      : location.state.response;
+  console.log(message);
+
+  const { store, actions } = useContext(Context);
 
   const {
     register,
@@ -16,8 +27,14 @@ export const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (evento) => {
-    console.log(evento);
+  const onSubmit = async (dataUser) => {
+    await actions.login(dataUser);
+    const isBike = store.user.type == "user" ? true : false;
+    if (isBike) {
+      navigate("/biker");
+    } else {
+      navigate("/menustore");
+    }
   };
 
   return (
@@ -26,14 +43,14 @@ export const Login = () => {
         <Logo />
       </div>
       <div className="mb-3">
-        <label for="exampleInputEmail1" className="form-label">
+        <label for="InputEmail" className="form-label">
           E-mail{" "}
         </label>
         <input
           name="email"
           type="text"
           className="form-control"
-          id="exampleInputEmail1"
+          id="InputEmail"
           aria-describedby="emailHelp"
           placeholder="ingrese Email"
           {...register("email", {
@@ -52,14 +69,14 @@ export const Login = () => {
         </di>
       </div>
       <div class="mb-3">
-        <label for="exampleInputPassword1" className="form-label">
+        <label for="InputPassword" className="form-label">
           Contraseña
         </label>
         <input
           type="password"
           name="password"
           className="form-control"
-          id="exampleInputPassword1"
+          id="InputPassword"
           placeholder="ingrese contraseña"
           {...register("password", {
             required: {
@@ -79,16 +96,9 @@ export const Login = () => {
 
       <div class="mb-3 ">
         <button type="submit" value="submit" className="btn btn-dark">
-          {/* onClick={() => navigate("/Biker")}  */}
-          Entrar Biker
+          Entrar
         </button>
-        <button
-          onClick={() => navigate("/menustore")}
-          type="submit"
-          className="btn btn-dark"
-        >
-          Entrar Store
-        </button>
+
         <button
           onClick={() => navigate("/Emailpassword")}
           type="submit"
