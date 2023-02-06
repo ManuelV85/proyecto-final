@@ -102,7 +102,8 @@ export const Upload_item = () => {
           id="my-button"
           name=""
           {...register("picture")}
-          accept="image/png,image/jpg"
+          accept="image/png,image/jpg" 
+
          ></input>
         <button
           type="submit"
@@ -111,6 +112,7 @@ export const Upload_item = () => {
         >
           Guardar
         </button>
+        
       </div>
     </form>
   );
