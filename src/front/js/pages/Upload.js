@@ -109,6 +109,7 @@ export const Upload_item = () => {
           type="submit"
           className="btn btn-dark"
           onClick={() => navigate("/menustore")}
+          
         >
           Guardar
         </button>
