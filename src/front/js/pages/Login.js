@@ -42,6 +42,13 @@ export const Login = () => {
       <div className="mb-3">
         <Logo />
       </div>
+      { message != ""?
+        <div  className="mb-3">
+          <label for="InputEmail" className="form-label" >
+            {message}
+          </label>
+        </div>:<></>
+      }
       <div className="mb-3">
         <label for="InputEmail" className="form-label">
           E-mail{" "}

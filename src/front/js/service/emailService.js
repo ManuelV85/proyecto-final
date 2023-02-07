@@ -8,14 +8,15 @@ export const sendEmail = (params) => {
   console.log(serviceId);
   console.log(templateId);
   console.log(key);
-
+  let templateIdtemp = params.templateId != null ? params.templateId:templateId
+  
   const templateParams = {
     from_name: "iProBikeTEAM",
     to_email: params.to_email,
     to_name: params.to_name,
     to_link: params.to_link,
   };
-  emailjs.send(serviceId, templateId, templateParams, key).then(
+  emailjs.send(serviceId, templateIdtemp, templateParams, key).then(
     (result) => {
       console.log(result.text);
     },

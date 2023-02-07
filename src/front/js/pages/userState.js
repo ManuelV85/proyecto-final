@@ -1,8 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../component/Logo";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext} from "react";
 import { products } from "./items1";
 import { sendEmail } from "../service/emailService";
+import { Context } from "../store/appContext";
 
 const categories = ["repuestos", "neumaticos", "accesorios"];
 
@@ -44,6 +45,7 @@ export const UserStore = () => {
   const [subcategorySelected, setSubcategorySelected] = useState("");
   const [subcategories, setSubCategories] = useState([]);
   const [actualIndex, setActualIndex] = useState(0);
+  const { store, actions } = useContext(Context)
   const [actualItem, setActualItem] = useState({
     id: -1,
     category: "",
@@ -77,7 +79,7 @@ export const UserStore = () => {
     }
     //console.log(subcategories);
     setSubCategories([...subcategories]);
-    setItem([]);
+    handleProduct({ target: { value: subcategories.length>0? subcategories[0]:""} })
   };
 
   const handleProduct = (value = { target: { value: "freno" } }) => {
@@ -120,7 +122,9 @@ export const UserStore = () => {
   const addToCar = async (item) => {
     console.log("creando orden de compra" + item.name);
     const wsUser = await getUserById(item.user_id);
-    sendEmail({to_email:wsUser.email,to_name:wsUser.first_name})
+    sendEmail({to_email:wsUser.email,templateId:"template_5ik8dgo", from_name:store.user.id})
+    
+
   };
 
   return (
