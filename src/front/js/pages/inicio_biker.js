@@ -29,7 +29,7 @@ export const Biker = () => {
       </button>
       <div className="mb-3">
         <button
-          onClick={() => alert("proximamente")}
+          onClick={() => navigate("/travel")}
           type="submit"
           className="btn btn-dark"
         >
