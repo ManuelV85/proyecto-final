@@ -5,7 +5,7 @@ import { products } from "./items1";
 import { sendEmail } from "../service/emailService";
 import { Context } from "../store/appContext";
 
-const categories = ["repuestos", "neumaticos", "accesorios"];
+const categories = ["Repuestos", "Bicicletas", "Accesorios"];
 
 const Categorias = [
   {
@@ -63,7 +63,7 @@ export const UserStore = () => {
     img: "",
   });
 
-  const filterSubcategories = (data = { target: { value: "repuestos" } }) => {
+  const filterSubcategories = (data = { target: { value: "Repuetos" } }) => {
     //console.log(data.target.value);
     setCategory(data.target.value);
     const items = products.filter((p) => p.category == data.target.value);
@@ -143,7 +143,8 @@ export const UserStore = () => {
           className="form-select"
           aria-label="Default select example"
         >
-          {categories.map((p, index) => (
+          {category != "" &&
+          categories.map((p, index) => (
             <option value={p} key={index + 100}>
               {p}
             </option>
@@ -179,8 +180,17 @@ export const UserStore = () => {
                   }
                   key={index + 10}
                 >
+                  
                   <img src={m.img} alt={m.name} className="d-block w-100" />
-                  <div class="carousel-caption">
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  <br></br>
+                  
+                  
+                  <div class="carousel-caption text-align: center">
                     <h3>{m.name}</h3>
                     <p>{m.price}</p>
                     <button
