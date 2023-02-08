@@ -20,6 +20,8 @@ import { Emailpassword } from "./pages/email.password";
 import { Horario } from "./pages/horario";
 import { Page404 } from "./pages/page404";
 import { Diary } from "./pages/diary"
+import { Travel } from "./pages/Travel";
+
 //create your first component
 const Layout = () => {
   //the basename is used when your project is published in a subdirectory and not in the root of the domain
@@ -44,6 +46,8 @@ const Layout = () => {
             <Route element={<Horario/>} path="/horario" />
             <Route element={<Page404/>} path="/page404" />
             <Route element={<Diary/>} path="/diary"/>
+            <Route element={<Travel/>} path="/travel"/>
+
           </Routes>
         </BrowserRouter>
       </div>
