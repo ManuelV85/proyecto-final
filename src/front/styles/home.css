@@ -182,3 +182,40 @@ input[type="file"] {
   border: 1px solid black;
   
 }revisar modificar el input file */
+
+
+.form-controle {
+  backdrop-filter: blur(1px);
+  background-color: rgb(24, 238, 12);
+  color: rgb(0, 0, 0);
+  font-size: 15px;
+  width: 90%;
+  margin-bottom:  4px;
+  text-align: center;
+
+  
+}
+
+.form-controle:hover {
+  backdrop-filter: blur(1px);
+  background-color: rgb(84, 255, 32);
+  box-shadow: 0 0 10px 10px rgba(105, 220, 11, 0.849);
+  color: white;
+}
+
+.viajes{
+  color: #08b3fd;
+  font-size: 25px;
+  border-inline-style: dotted;
+  writing-mode: horizontal-tb;
+  
+  
+}
+
+.listadoeventos{
+  font-size:20px ;
+  box-shadow: 0px 10px 10px rgb(251, 252, 252);
+  background-color: #ffffff94;
+  backdrop-filter: blur(1px);
+  color: #000000;
+}
