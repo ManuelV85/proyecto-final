@@ -154,16 +154,11 @@ option {
 
 #my-button {
   width: 250px;
-  font-size: 15px;
+  font-size: 20px;
   margin-bottom: 30px;
   margin-top: 20px;
   text-align: center;
-  color: white;
-  border-radius: 15px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
-  transition: 0.3s;
-  padding: 10px;
- 
+  color: black;
 }
 
 .btn-dark {
@@ -182,3 +177,61 @@ input[type="file"] {
   border: 1px solid black;
   
 }revisar modificar el input file */
+
+.agenda {
+  color: rgb(255, 255, 255);
+  font-size: 30px;
+  text-shadow: 2px 2px 10px #01f615;
+  box-shadow: 0 0 10px 10px rgba(113, 215, 10, 0.556);
+}
+
+.form-controll {
+  backdrop-filter: blur(1px);
+  background-color: rgba(5, 224, 20, 0.196);
+  color: rgb(255, 254, 254);
+  margin-top: -8px;
+}
+
+.form-controll:hover {
+  backdrop-filter: blur(1px);
+  background-color: rgba(5, 224, 38, 0.159);
+  box-shadow: 0 0 10px 10px rgba(105, 220, 11, 0.849);
+  color: white;
+}
+
+.p-2 {
+  background-color: rgba(16, 114, 5, 0.489);
+  text-align: left;
+}
+
+.datos {
+  color: #fff4f4;
+  margin-left: 5px;
+}
+
+.d-flex {
+  background-color: rgb(0, 0, 0);
+}
+
+.losbuton {
+  text-align: right;
+  background-color: #040000;
+  margin-bottom: 5px;
+}
+
+.btn-darkk {
+  width: 102%;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  box-shadow: 0 0 10px 10px rgba(22, 185, 44, 0.534);
+  color: rgb(6, 235, 56);
+  background-color: rgba(0, 5, 5, 0.921);
+  backdrop-filter: blur(1px);
+}
+
+
+.btn-darkk:hover {
+  background-color: rgb(90, 246, 0);
+  color: black;
+  box-shadow: 0 0 10px 10px rgba(122, 222, 21, 0.882);}

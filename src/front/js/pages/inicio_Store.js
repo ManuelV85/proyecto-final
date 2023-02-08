@@ -32,11 +32,11 @@ export const MenuStore = () => {
         </button>
 
         <button
-          onClick={() => navigate("/tableinventary")}
+          onClick={() => navigate("/diary")}
           type="submit"
           className="btn btn-dark"
         >
-          Inventario
+          Contacto Clientes
         </button>
 
         <button
