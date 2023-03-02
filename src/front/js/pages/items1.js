@@ -64,7 +64,7 @@ export const products = [
   },
   {
     category: "Bicicletas",
-    subcategory: "Bicicleta de montaña",
+    subcategory: "Bicicleta de ruta",
     name: "LIVALL",
     price: "600.000",
     img: "https://res.cloudinary.com/duyceuv9y/image/upload/v1675812747/categoria/ruta_2_fijau7.png",
@@ -83,9 +83,9 @@ export const products = [
   {
     category: "Accesorios",
     subcategory: "Cascos",
-    name: "LIVALL",
+    name: "CUBE",
     price: "70.000",
-    img: "https://res.cloudinary.com/duyceuv9y/image/upload/v1675812747/categoria/ruta_2_fijau7.png",
+    img: "https://res.cloudinary.com/duyceuv9y/image/upload/v1675812770/categoria/casco_2_twgv8d.png",
     id: 10,
     user_id: 6,
   },
