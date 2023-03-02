@@ -15,8 +15,8 @@ export const Home = () => {
       </div>
       <div className="mb-3">
         <div className="DATO">
-          <h1>Bienvenidos</h1>
-          <p>
+          <h1 className="bienvenidos">Bienvenidos</h1>
+          <p className="descripcion">
             Somos una aplicacion destinada a todos nuestros ciclistas que
             requieran ayuda en ruta
           </p>

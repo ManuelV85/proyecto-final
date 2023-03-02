@@ -1,15 +1,23 @@
 .contenedor-login {
-  color: rgb(255, 255, 255);
-  font-size: 25px;
+  color: rgb(248, 248, 248);
+  font-size: 20px;
   font-weight: bold;
   width: 350px;
-  background-color: rgba(254, 255, 254, 0);
+  background-color: rgba(3, 52, 3, 0.949);
   border-radius: 20px;
   margin-top: 50px;
   padding: 20px;
-  backdrop-filter: blur(1px);
+
   box-shadow: 0 0 70px 10px rgba(24, 246, 72, 0.871);
   text-align: center;
+}
+
+.descripcion {
+  font-size: 130%;
+}
+
+.bienvenidos {
+  color: #0bf545;
 }
 
 .mb-3 {
@@ -68,16 +76,16 @@ option {
 }
 
 .form-control {
-  backdrop-filter: blur(1px);
-  background-color: rgba(5, 224, 20, 0.196);
-  color: rgb(255, 254, 254);
+  background-color: rgba(16, 132, 22, 0.981);
+  color: rgb(255, 255, 255);
 }
 
 .form-control:hover {
   backdrop-filter: blur(1px);
-  background-color: rgba(5, 224, 38, 0.159);
+  background-color: rgba(8, 200, 37, 0.159);
   box-shadow: 0 0 10px 10px rgba(105, 220, 11, 0.849);
-  color: white;
+  color: rgb(255, 255, 255);
+  
 }
 
 .card-producto {
@@ -163,7 +171,6 @@ option {
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
   transition: 0.3s;
   padding: 10px;
- 
 }
 
 .btn-dark {
@@ -183,17 +190,14 @@ input[type="file"] {
   
 }revisar modificar el input file */
 
-
 .form-controle {
   backdrop-filter: blur(1px);
   background-color: rgb(24, 238, 12);
   color: rgb(0, 0, 0);
   font-size: 15px;
   width: 90%;
-  margin-bottom:  4px;
+  margin-bottom: 4px;
   text-align: center;
-
-  
 }
 
 .form-controle:hover {
@@ -203,17 +207,15 @@ input[type="file"] {
   color: white;
 }
 
-.viajes{
+.viajes {
   color: #08b3fd;
   font-size: 25px;
   border-inline-style: dotted;
   writing-mode: horizontal-tb;
-  
-  
 }
 
-.listadoeventos{
-  font-size:20px ;
+.listadoeventos {
+  font-size: 20px;
   box-shadow: 0px 10px 10px rgb(251, 252, 252);
   background-color: #ffffff94;
   backdrop-filter: blur(1px);
