@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 
 export const Upload_item = () => {
-  const url = process.env.BACKEND_URL
+  const url = process.env.BACKEND_URL;
   const {
     register,
     handleSubmit,
@@ -10,6 +10,7 @@ export const Upload_item = () => {
   } = useForm();
 
   const onSubmit = async (dataUser) => {
+    
     var data = new FormData();
     console.log(dataUser["picture"][0]);
     data.append("category", dataUser["category"]);
@@ -73,15 +74,25 @@ export const Upload_item = () => {
         />
 
         <label for="InputEmail1" className="form-label">
-          Precio Unitario{" "}
+          Precio Unitario (CLP){" "}
         </label>
         <input
           type="text"
           className="form-control"
-          id="InputPrecio"
+          id="monto"
           aria-describedby="emailHelp"
-          placeholder="ingrese nombre producto"
+          placeholder="ej:15000"
           {...register("price")}
+          onChange={(e) => {
+            let monto = e.target.value;
+            monto = monto.replace(/[^0-9]/g, "");
+            const formatter = new Intl.NumberFormat("es-CL", {
+              style: "currency",
+              currency: "CLP",
+            });
+            const montoFormateado = formatter.format(monto);
+            e.target.value = montoFormateado;
+          }}
         />
 
         <div className="mb-3">
@@ -102,18 +113,15 @@ export const Upload_item = () => {
           id="my-button"
           name=""
           {...register("picture")}
-          accept="image/png,image/jpg" 
-
-         ></input>
+          accept="image/png,image/jpg"
+        ></input>
         <button
           type="submit"
           className="btn btn-dark"
           onClick={() => navigate("/menustore")}
-          
         >
           Guardar
         </button>
-        
       </div>
     </form>
   );
